@@ -30,8 +30,7 @@ function CountdownBox({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center gap-1">
       <div
-        className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-extrabold text-lg"
-        style={{ backgroundColor: '#1a2035', border: '1px solid rgba(255,255,255,0.12)' }}
+        className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-extrabold text-lg bg-[#1a2035] border border-[#ffffff1f]"
       >
         {String(value).padStart(2, '0')}
       </div>
@@ -96,17 +95,15 @@ function MiniTournamentCard({ t, onDetail }: { t: Tournament; onDetail: () => vo
   const finished = t.status === 'finished';
   return (
     <div
-      className={`flex-shrink-0 w-72 rounded-2xl overflow-hidden border flex flex-col transition-all ${
+      className={`flex-shrink-0 w-72 rounded-2xl overflow-hidden border flex flex-col transition-all tournament-card-bg ${
         finished ? 'border-white/15 opacity-65' : 'border-white/10 hover:border-[#D4AF37]/30'
       }`}
-      style={{ background: 'linear-gradient(160deg,#131a27 0%,#0b0c14 100%)' }}
     >
-      <div className="relative overflow-hidden" style={{ aspectRatio: '16/7' }}>
-        <img src={t.image} alt={t.name} className="w-full h-full object-cover"
-          style={{ filter: finished ? 'grayscale(80%) brightness(0.5)' : 'brightness(0.8)' }} />
+      <div className="relative overflow-hidden aspect-tournament">
+        <img src={t.image} alt={t.name} className="w-full h-full object-cover dyn-filter"
+          style={{ '--dyn-filter': finished ? 'grayscale(80%) brightness(0.5)' : 'brightness(0.8)' } as React.CSSProperties} />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
-        <span className="absolute top-2.5 left-3 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"
-          style={{ backgroundColor: t.badgeColor }}>{t.badge}</span>
+        <span className="absolute top-2.5 left-3 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full dyn-bg" style={{ '--dyn-bg': t.badgeColor } as React.CSSProperties}>{t.badge}</span>
         <div className="absolute top-2.5 right-3 flex items-center gap-1 bg-black/55 rounded-full px-2 py-0.5">
           <Users className="w-3 h-3 text-gray-300" />
           <span className="text-white text-[10px] font-semibold">{t.participants.toLocaleString('pt-BR')}</span>
@@ -119,7 +116,7 @@ function MiniTournamentCard({ t, onDetail }: { t: Tournament; onDetail: () => vo
       <div className="px-3 pt-3 pb-3 flex flex-col gap-2.5">
         <div>
           <p className="text-gray-500 text-[9px] uppercase tracking-wider leading-none mb-0.5">Prêmio Total</p>
-          <p className="font-extrabold text-base leading-none" style={{ color: '#D4AF37' }}>{t.totalPrize}</p>
+          <p className="font-extrabold text-base leading-none text-[#D4AF37]">{t.totalPrize}</p>
         </div>
         <div className="flex gap-1.5">
           {t.prizes.slice(0, 3).map((p, i) => (
@@ -130,8 +127,7 @@ function MiniTournamentCard({ t, onDetail }: { t: Tournament; onDetail: () => vo
           ))}
         </div>
         <button onClick={onDetail}
-          className="w-full py-2 rounded-xl text-xs font-bold text-black hover:opacity-90 transition-opacity"
-          style={{ backgroundColor: '#D4AF37' }}>
+          className="w-full py-2 rounded-xl text-xs font-bold text-black hover:opacity-90 transition-opacity bg-[#D4AF37]">
           Saiba mais
         </button>
       </div>
@@ -173,12 +169,11 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
     <div className="min-h-screen flex flex-col">
 
       {/* ── Hero Banner ──────────────────────────────────────────────────── */}
-      <div className="relative overflow-hidden" style={{ minHeight: '480px' }}>
+      <div className="relative overflow-hidden min-h-[480px]">
         <img
           src={t.image}
           alt={t.name}
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ filter: 'brightness(0.45) saturate(0.9)' }}
+          className="absolute inset-0 w-full h-full object-cover detail-hero-filter"
         />
         {/* Gradient layers */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0b0c14] via-black/50 to-black/20" />
@@ -194,8 +189,7 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
           <div className="flex-1 flex flex-col justify-end pb-4">
             {/* Badges row */}
             <div className="flex flex-wrap items-center gap-2 mb-4">
-              <span className="text-white text-xs font-bold px-3 py-1 rounded-full"
-                style={{ backgroundColor: t.badgeColor }}>{t.badge}</span>
+              <span className="text-white text-xs font-bold px-3 py-1 rounded-full dyn-bg" style={{ '--dyn-bg': t.badgeColor } as React.CSSProperties}>{t.badge}</span>
               <span className="text-white text-xs font-semibold px-3 py-1 rounded-full bg-white/15 border border-white/20">
                 {t.provider}
               </span>
@@ -212,7 +206,7 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
               {/* Prize — left */}
               <div>
                 <p className="text-gray-400 text-[10px] uppercase tracking-widest mb-1">Prêmio Total</p>
-                <p className="font-extrabold text-4xl sm:text-5xl leading-none" style={{ color: '#D4AF37' }}>
+                <p className="font-extrabold text-4xl sm:text-5xl leading-none text-[#D4AF37]">
                   {t.totalPrize}
                 </p>
               </div>
@@ -222,8 +216,7 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
                 <div className="flex flex-col items-start sm:items-end gap-3">
                   <CountdownRow countdown={countdown} />
                   <button
-                    className="flex items-center gap-2 px-7 py-3 rounded-xl font-bold text-white text-sm hover:opacity-90 transition-opacity"
-                    style={{ backgroundColor: '#00C44D' }}
+                    className="flex items-center gap-2 px-7 py-3 rounded-xl font-bold text-white text-sm hover:opacity-90 transition-opacity bg-[#00C44D]"
                   >
                     <span className="text-base leading-none">▶</span> Inscrição Automática
                   </button>
@@ -235,13 +228,13 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
       </div>
 
       {/* ── Summary bar ──────────────────────────────────────────────────── */}
-      <div className="border-b border-white/15" style={{ background: '#0f1420' }}>
+      <div className="border-b border-white/15 bg-[#0f1420]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex overflow-x-auto [scrollbar-width:none] divide-x divide-white/5">
             {summaryItems.map(item => (
               <div key={item.label} className="flex items-center gap-3 px-5 py-4 flex-shrink-0">
-                <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#D4AF3718' }}>
-                  <item.icon className="w-3.5 h-3.5" style={{ color: '#D4AF37' }} />
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-[#D4AF3718]">
+                  <item.icon className="w-3.5 h-3.5 text-[#D4AF37]" />
                 </div>
                 <div>
                   <p className="text-gray-500 text-[9px] uppercase tracking-wider">{item.label}</p>
@@ -251,7 +244,7 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
               </div>
             ))}
             <div className="flex items-center gap-3 px-5 py-4 flex-shrink-0">
-              <Users className="w-4 h-4 flex-shrink-0" style={{ color: '#D4AF37' }} />
+              <Users className="w-4 h-4 flex-shrink-0 text-[#D4AF37]" />
               <div>
                 <p className="text-gray-500 text-[10px] uppercase tracking-wide">Participantes</p>
                 <p className="text-white text-sm font-semibold">{t.participants.toLocaleString('pt-BR')}</p>
@@ -272,7 +265,7 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
               <div className="bg-[#131a27] rounded-2xl border border-white/10 overflow-hidden">
                 <div className="flex items-center justify-between px-5 py-4 border-b border-white/15">
                   <div className="flex items-center gap-2">
-                    <Trophy className="w-4 h-4" style={{ color: '#D4AF37' }} />
+                    <Trophy className="w-4 h-4 text-[#D4AF37]" />
                     <h2 className="text-white font-bold text-sm">Ranking ao Vivo</h2>
                   </div>
                   <span className="text-xs text-gray-500">{t.participants.toLocaleString('pt-BR')} jogadores</span>
@@ -296,8 +289,8 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
 
                       {/* Avatar */}
                       <div
-                        className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
-                        style={{ backgroundColor: row.isMe ? '#D4AF3733' : '#ffffff15', border: row.isMe ? '1.5px solid #D4AF37' : '1.5px solid #ffffff20' }}
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 dyn-bg dyn-border-full"
+                        style={{ '--dyn-bg': row.isMe ? '#D4AF3733' : '#ffffff15', '--dyn-border-full': row.isMe ? '1.5px solid #D4AF37' : '1.5px solid #ffffff20' } as React.CSSProperties}
                       >
                         {row.user.slice(0, 2).toUpperCase()}
                       </div>
@@ -309,16 +302,14 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
                             {row.user}
                           </p>
                           {row.isMe && (
-                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full text-black flex-shrink-0"
-                              style={{ backgroundColor: '#D4AF37' }}>Você</span>
+                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full text-black flex-shrink-0 bg-[#D4AF37]">Você</span>
                           )}
                         </div>
                         <p className="text-gray-500 text-xs">{row.score}</p>
                       </div>
 
                       {/* Prize */}
-                      <p className="text-sm font-bold flex-shrink-0"
-                        style={{ color: row.pos <= 3 ? medalColors[row.pos - 1] : '#6b7280' }}>
+                      <p className="text-sm font-bold flex-shrink-0 dyn-text" style={{ '--dyn-text': row.pos <= 3 ? medalColors[row.pos - 1] : '#6b7280' } as React.CSSProperties}>
                         {row.amount}
                       </p>
                     </div>
@@ -331,18 +322,16 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
                 <div className="hidden lg:block bg-[#131a27] rounded-2xl border border-white/10 overflow-hidden">
                   <div className="flex items-center justify-between px-5 py-4 border-b border-white/15">
                     <div className="flex items-center gap-2">
-                      <Star className="w-4 h-4" style={{ color: '#D4AF37' }} />
+                      <Star className="w-4 h-4 text-[#D4AF37]" />
                       <h2 className="text-white font-bold text-sm">Jogos Participantes</h2>
                     </div>
                     <div className="flex items-center gap-2">
                       <button onClick={() => scrollGames('left')}
-                        className="w-7 h-7 rounded-xl flex items-center justify-center text-white transition-colors border border-white/10"
-                        style={{ backgroundColor: '#00C44D22' }}>
+                        className="w-7 h-7 rounded-xl flex items-center justify-center text-white transition-colors border border-white/10 bg-[#00C44D22]">
                         <ChevronLeft className="w-4 h-4" />
                       </button>
                       <button onClick={() => scrollGames('right')}
-                        className="w-7 h-7 rounded-xl flex items-center justify-center text-white transition-colors border border-white/10"
-                        style={{ backgroundColor: '#00C44D22' }}>
+                        className="w-7 h-7 rounded-xl flex items-center justify-center text-white transition-colors border border-white/10 bg-[#00C44D22]">
                         <ChevronRight className="w-4 h-4" />
                       </button>
                     </div>
@@ -364,7 +353,7 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
               {/* Prize table */}
               <div className="bg-[#131a27] rounded-2xl border border-white/10 overflow-hidden">
                 <div className="flex items-center gap-2 px-5 py-4 border-b border-white/15">
-                  <Award className="w-4 h-4" style={{ color: '#D4AF37' }} />
+                  <Award className="w-4 h-4 text-[#D4AF37]" />
                   <h2 className="text-white font-bold text-sm">Distribuição de Prêmios</h2>
                 </div>
                 <div className="divide-y divide-white/5">
@@ -377,8 +366,7 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
                         <span className="text-gray-400 text-sm">{p.place}º lugar</span>
                       </div>
                       <span
-                        className="text-sm font-bold"
-                        style={{ color: i < 3 ? medalColors[i] : '#9ca3af' }}
+                        className="text-sm font-bold dyn-text" style={{ '--dyn-text': i < 3 ? medalColors[i] : '#9ca3af' } as React.CSSProperties}
                       >
                         {p.amount}
                       </span>
@@ -392,7 +380,7 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
                 <div className="lg:hidden bg-[#131a27] rounded-2xl border border-white/10 overflow-hidden">
                   <div className="flex items-center justify-between px-5 py-4 border-b border-white/15">
                     <div className="flex items-center gap-2">
-                      <Star className="w-4 h-4" style={{ color: '#D4AF37' }} />
+                      <Star className="w-4 h-4 text-[#D4AF37]" />
                       <h2 className="text-white font-bold text-sm">Jogos Participantes</h2>
                     </div>
                   </div>
@@ -417,8 +405,7 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
                     {t.rules.map((rule, i) => (
                       <div key={i} className="flex items-start gap-3">
                         <span
-                          className="w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center text-[9px] font-bold text-white mt-0.5"
-                          style={{ backgroundColor: '#D4AF37' }}
+                          className="w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center text-[9px] font-bold text-white mt-0.5 bg-[#D4AF37]"
                         >
                           {i + 1}
                         </span>
@@ -436,18 +423,16 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
             <div>
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
-                  <Trophy className="w-5 h-5" style={{ color: '#D4AF37' }} />
+                  <Trophy className="w-5 h-5 text-[#D4AF37]" />
                   <h2 className="text-white font-bold text-lg">Outros Torneios Ativos</h2>
                 </div>
                 <div className="flex gap-2">
                   <button onClick={() => scrollOthers('left')}
-                    className="w-8 h-8 rounded-xl flex items-center justify-center text-white border border-white/10"
-                    style={{ backgroundColor: '#00C44D22' }}>
+                    className="w-8 h-8 rounded-xl flex items-center justify-center text-white border border-white/10 bg-[#00C44D22]">
                     <ChevronLeft className="w-4 h-4" />
                   </button>
                   <button onClick={() => scrollOthers('right')}
-                    className="w-8 h-8 rounded-xl flex items-center justify-center text-white border border-white/10"
-                    style={{ backgroundColor: '#00C44D22' }}>
+                    className="w-8 h-8 rounded-xl flex items-center justify-center text-white border border-white/10 bg-[#00C44D22]">
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>

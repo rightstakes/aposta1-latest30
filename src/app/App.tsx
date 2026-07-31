@@ -2,9 +2,20 @@ import { useState } from 'react';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { PromoCards } from './components/PromoCards';
-import { Categories } from './components/Categories';
+// import { Categories } from './components/Categories'; // hidden on home page per request
 import { BigGameRow } from './components/BigGameRow';
 import { SmallGameRow } from './components/SmallGameRow';
+import { TopGamesRow } from './components/TopGamesRow';
+import top10Aviator from '../imports/top10-1-aviator.webp';
+import top10FortuneTiger from '../imports/top10-2-fortune-tiger.webp';
+import top10GatesOfOlympus from '../imports/top10-3-gates-of-olympus.webp';
+import top10BigBassBonanza from '../imports/top10-4-big-bass-bonanza.webp';
+import top10SugarRush from '../imports/top10-5-sugar-rush.webp';
+import top10FortuneRabbit from '../imports/top10-6-fortune-rabbit.webp';
+import top10FortuneDragon from '../imports/top10-7-fortune-dragon.webp';
+import top10FortuneHorse from '../imports/top10-8-fortune-horse.webp';
+import top10Mines from '../imports/top10-9-mines.webp';
+import top10BaraoVermelho from '../imports/top10-10-barao-vermelho.webp';
 import { PromotionsSection } from './components/PromotionsSection';
 import { SEOContent } from './components/SEOContent';
 import { Footer } from './components/Footer';
@@ -67,6 +78,19 @@ const popularGames = [
   { title: 'Doomsday Rampage', provider: 'PG Soft', image: imgDoomsday },
 ];
 
+const top10Games = [
+  { title: 'Aviator', image: top10Aviator },
+  { title: 'Fortune Tiger', image: top10FortuneTiger },
+  { title: 'Gates of Olympus', image: top10GatesOfOlympus },
+  { title: 'Big Bass Bonanza', image: top10BigBassBonanza },
+  { title: 'Sugar Rush', image: top10SugarRush },
+  { title: 'Fortune Rabbit', image: top10FortuneRabbit },
+  { title: 'Fortune Dragon', image: top10FortuneDragon },
+  { title: 'Fortune Horse', image: top10FortuneHorse },
+  { title: 'Mines', image: top10Mines },
+  { title: 'Barão Vermelho', image: top10BaraoVermelho },
+];
+
 const slotsGames = [
   { title: 'Zeus Lightning', provider: 'Pragmatic Play', image: imgZeus },
   { title: 'Buffalo King', provider: 'Pragmatic Play', image: imgBuffaloKing },
@@ -105,7 +129,6 @@ const tableGames = [
 ];
 
 export default function App() {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [activePage, setActivePage] = useState<Page>('home');
   const [activePromoId, setActivePromoId] = useState<string | null>(null);
@@ -115,7 +138,7 @@ export default function App() {
   const [depositOpen, setDepositOpen] = useState(false);
   const [withdrawOpen, setWithdrawOpen] = useState(false);
 
-  const ACCOUNT_SECTIONS = ['minha-conta','carteira','apostas','limites','pausas','seguranca','contas-bancarias'];
+  const ACCOUNT_SECTIONS = ['minha-conta','carteira','apostas','limites','pausas-suspensoes','seguranca','contas-bancarias'];
   const BONUS_SLUGS = ['bonus'];
 
   const navigate = (page: string) => {
@@ -176,29 +199,28 @@ export default function App() {
         <div className={`lg:hidden fixed top-[82px] left-0 h-[calc(100vh-82px)] z-[70] transition-transform duration-300 ${mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           <div className="h-full">
             <Sidebar
-              isCollapsed={false}
-              onToggleCollapse={() => {}}
-              showToggleButton={false}
               activePage={activePage}
               onNavigate={navigate}
-              onOpenDeposit={() => setDepositOpen(true)}
             />
           </div>
         </div>
 
         {/* Desktop Sidebar */}
-        <div className="hidden lg:block fixed top-[82px] left-0 h-[calc(100vh-82px)] z-40">
+        <div className="hidden lg:block fixed top-0 left-0 h-full z-40">
           <Sidebar
-            isCollapsed={sidebarCollapsed}
-            onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
-            showToggleButton={true}
             activePage={activePage}
             onNavigate={navigate}
-            onOpenDeposit={() => setDepositOpen(true)}
           />
         </div>
 
-        <main className={`${sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'} overflow-y-auto min-h-screen transition-all duration-300 pb-24 lg:pb-0`}>
+        {/* Rounded-corner effect where sidebar, header, and main content meet */}
+        <div
+          className="hidden lg:block fixed pointer-events-none z-[55] top-[82px] left-[128px] w-5 h-5 corner-notch"
+        />
+
+        <main
+          className="page-glow-bg lg:ml-32 overflow-y-auto min-h-screen transition-all duration-300 pb-24 lg:pb-0"
+        >
           {activePage === 'notificacoes' ? (
             <NotificationsPage onNavigateStatic={openStaticPage} />
           ) : activePage === 'recompensas' ? (
@@ -245,19 +267,8 @@ export default function App() {
             <PromotionsPage onOpenPromo={openPromo} onNavigateStatic={openStaticPage} />
           ) : activePage === 'home' ? (
             <>
-              <div
-                className="fixed left-[calc(50%+128px)] -translate-x-1/2 pointer-events-none"
-                style={{
-                  top: 0,
-                  width: '1280px',
-                  height: '680px',
-                  background: 'radial-gradient(at 50% 0%, rgb(61 31 143 / 90%) 0%, rgb(61 31 143 / 60%) 35%, rgb(61 31 143 / 30%) 60%, transparent 85%)',
-                  filter: 'blur(12px)',
-                  zIndex: 0,
-                }}
-              />
               <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-4">
-                <Categories />
+                {/* <Categories /> — hidden per request */}
 
                 <PromoCards />
 
@@ -270,6 +281,8 @@ export default function App() {
                   />
                   <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 </div>
+
+                <TopGamesRow title="Top 10 Jogos" games={top10Games} />
 
                 <BigGameRow
                   title="Jogos em Destaque"
@@ -298,7 +311,7 @@ export default function App() {
                   games={tableGames}
                 />
                 <ProvidersSection />
-                <PromotionsSection />
+                <PromotionsSection onOpenPromo={(id) => { navigate('promocoes'); openPromo(id); }} onSeeAll={() => navigate('promocoes')} />
                 <SEOContent />
               </div>
               <Footer onNavigate={openStaticPage} />

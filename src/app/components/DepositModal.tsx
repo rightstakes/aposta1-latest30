@@ -49,12 +49,10 @@ export function DepositModal({ onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-      style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(6px)' }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-overlay-75"
       onClick={e => e.target === e.currentTarget && onClose()}
     >
-      <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border border-white/10"
-        style={{ background: 'radial-gradient(circle 200px at center 120%, #3d1f8f, #110936)' }}>
+      <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border border-white/15 modal-card-glow">
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.08]">
@@ -95,12 +93,7 @@ export function DepositModal({ onClose }: Props) {
                   <button
                     key={v}
                     onClick={() => selectPreset(v)}
-                    className="py-3 rounded-xl text-sm font-bold border transition-all"
-                    style={{
-                      backgroundColor: selected === v ? 'rgba(0,196,77,0.15)' : 'rgba(255,255,255,0.04)',
-                      borderColor: selected === v ? '#00C44D' : 'rgba(255,255,255,0.08)',
-                      color: selected === v ? '#00C44D' : '#9ca3af',
-                    }}
+                    className="py-3 rounded-xl text-sm font-bold border transition-all dyn-bg dyn-border dyn-text" style={{ '--dyn-bg': selected === v ? 'rgba(0,196,77,0.15)' : 'rgba(255,255,255,0.04)', '--dyn-border': selected === v ? '#00C44D' : 'rgba(255,255,255,0.08)', '--dyn-text': selected === v ? '#00C44D' : '#9ca3af' } as React.CSSProperties}
                   >
                     R$ {v}
                   </button>
@@ -121,15 +114,14 @@ export function DepositModal({ onClose }: Props) {
               <button
                 onClick={handleGenerate}
                 disabled={!canProceed}
-                className="w-full py-4 rounded-xl font-bold text-white text-base flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{ backgroundColor: canProceed ? '#00C44D' : '#374151' }}
+                className="w-full py-4 rounded-xl font-bold text-white text-base flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed dyn-bg" style={{ '--dyn-bg': canProceed ? '#00C44D' : '#374151' } as React.CSSProperties}
               >
                 <QrCode className="w-5 h-5" />
                 Gerar QR Code PIX
                 <ChevronRight className="w-4 h-4" />
               </button>
 
-              <p className="text-gray-600 text-[11px] text-center mt-4">
+              <p className="text-gray-400 text-[11px] text-center mt-4">
                 Pagamentos processados com segurança · SSL 256-bit
               </p>
             </>
@@ -144,7 +136,7 @@ export function DepositModal({ onClose }: Props) {
               {/* QR Code */}
               <div className="flex justify-center mb-5">
                 <div className="rounded-2xl p-4 border border-white/10 bg-white">
-                  <img src={FAKE_QR} alt="QR PIX" className="w-44 h-44" style={{ imageRendering: 'pixelated' }} />
+                  <img src={FAKE_QR} alt="QR PIX" className="w-44 h-44 qr-pixelated" />
                 </div>
               </div>
 
@@ -178,14 +170,13 @@ export function DepositModal({ onClose }: Props) {
                 </button>
                 <button
                   onClick={onClose}
-                  className="flex-1 py-3 rounded-xl text-sm font-semibold text-white hover:opacity-90 transition-opacity"
-                  style={{ backgroundColor: '#00C44D' }}
+                  className="flex-1 py-3 rounded-xl text-sm font-semibold text-white hover:opacity-90 transition-opacity bg-[#00C44D]"
                 >
                   Já paguei ✓
                 </button>
               </div>
 
-              <p className="text-gray-600 text-[11px] text-center mt-4">
+              <p className="text-gray-400 text-[11px] text-center mt-4">
                 QR Code válido por 30 minutos · crédito em segundos
               </p>
             </>

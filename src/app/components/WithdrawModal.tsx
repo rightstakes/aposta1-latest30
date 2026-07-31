@@ -50,12 +50,10 @@ export function WithdrawModal({ onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-      style={{ background: 'rgba(0,0,0,0.78)', backdropFilter: 'blur(6px)' }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-overlay-78"
       onClick={e => e.target === e.currentTarget && onClose()}
     >
-      <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border border-white/10"
-        style={{ background: 'radial-gradient(circle 200px at center 120%, #3d1f8f, #110936)' }}>
+      <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border border-white/15 modal-card-glow">
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.08]">
@@ -79,8 +77,8 @@ export function WithdrawModal({ onClose }: Props) {
                 <p className="text-white font-bold text-xl mb-1">Saque Solicitado!</p>
                 <p className="text-gray-400 text-sm">Seu saque de <span className="text-white font-semibold">R$ {parseFloat(amount).toFixed(2).replace('.',',')}</span> foi enviado para processamento.</p>
               </div>
-              <p className="text-gray-500 text-xs">Processamento em até 10 minutos · via PIX</p>
-              <button onClick={onClose} className="w-full py-3 rounded-xl text-white font-semibold hover:opacity-90" style={{ backgroundColor: '#00C44D' }}>
+              <p className="text-gray-400 text-xs">Processamento em até 10 minutos · via PIX</p>
+              <button onClick={onClose} className="w-full py-3 rounded-xl text-white font-semibold hover:opacity-90 bg-[#00C44D]">
                 Fechar
               </button>
             </div>
@@ -116,15 +114,9 @@ export function WithdrawModal({ onClose }: Props) {
               <div className="grid grid-cols-3 gap-2">
                 {PRESETS.map(p => (
                   <button key={p.value} onClick={() => pickPreset(p.value)}
-                    className="relative py-2.5 rounded-xl text-sm font-bold border transition-all"
-                    style={{
-                      backgroundColor: selected === p.value ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.04)',
-                      borderColor: selected === p.value ? '#D4AF37' : 'rgba(255,255,255,0.08)',
-                      color: selected === p.value ? '#D4AF37' : '#9ca3af',
-                    }}>
+                    className="relative py-2.5 rounded-xl text-sm font-bold border transition-all dyn-bg dyn-border dyn-text" style={{ '--dyn-bg': selected === p.value ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.04)', '--dyn-border': selected === p.value ? '#D4AF37' : 'rgba(255,255,255,0.08)', '--dyn-text': selected === p.value ? '#D4AF37' : '#9ca3af' } as React.CSSProperties}>
                     {p.tag && (
-                      <span className="absolute -top-2 -right-1 text-[9px] font-bold px-1 py-0.5 rounded text-black"
-                        style={{ backgroundColor: p.tag === 'HOT' ? '#ef4444' : '#00C44D' }}>
+                      <span className="absolute -top-2 -right-1 text-[9px] font-bold px-1 py-0.5 rounded text-black dyn-bg" style={{ '--dyn-bg': p.tag === 'HOT' ? '#ef4444' : '#00C44D' } as React.CSSProperties}>
                         {p.tag}
                       </span>
                     )}
@@ -161,7 +153,7 @@ export function WithdrawModal({ onClose }: Props) {
                     value={keyValue}
                     onChange={e => setKeyValue(e.target.value)}
                     placeholder={keyPlaceholder[keyType]}
-                    className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#D4AF37] transition-colors placeholder-gray-600"
+                    className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-[#D4AF37] transition-colors placeholder-gray-500"
                   />
                 </div>
               </div>
@@ -194,8 +186,7 @@ export function WithdrawModal({ onClose }: Props) {
               <button
                 onClick={handleSubmit}
                 disabled={!canSubmit}
-                className="w-full py-4 rounded-xl font-bold text-white text-base transition-all disabled:opacity-35 disabled:cursor-not-allowed"
-                style={{ backgroundColor: canSubmit ? '#D4AF37' : '#374151' }}
+                className="w-full py-4 rounded-xl font-bold text-white text-base transition-all disabled:opacity-35 disabled:cursor-not-allowed dyn-bg" style={{ '--dyn-bg': canSubmit ? '#D4AF37' : '#374151' } as React.CSSProperties}
               >
                 SACAR
               </button>

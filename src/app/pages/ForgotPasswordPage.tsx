@@ -76,8 +76,7 @@ export function ForgotPasswordPage({ onNavigate }: Props) {
 
             <button
               type="submit"
-              className="w-full py-3.5 rounded-xl font-bold text-white text-sm transition-opacity hover:opacity-90"
-              style={{ backgroundColor: '#00C44D' }}
+              className="w-full py-3.5 rounded-xl font-bold text-white text-sm transition-opacity hover:opacity-90 bg-[#00C44D]"
             >
               Continuar
             </button>

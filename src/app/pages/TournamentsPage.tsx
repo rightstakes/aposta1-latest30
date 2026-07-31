@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, Trophy, Users, Medal, Clock, CheckCircle2 } from 'lucide-react';
 import { Footer } from '../components/Footer';
 import { tournaments } from '../data/tournaments';
@@ -13,13 +13,12 @@ function TournamentCard({ t, onDetail }: { t: Tournament; onDetail: () => void }
 
   return (
     <div
-      className={`rounded-2xl overflow-hidden border flex flex-col transition-all ${
+      className={`rounded-2xl overflow-hidden border flex flex-col transition-all tournament-card-bg ${
         finished ? 'border-white/15 opacity-65' : 'border-white/10 hover:border-[#D4AF37]/30 hover:shadow-lg hover:shadow-[#D4AF37]/10'
       }`}
-      style={{ background: 'linear-gradient(160deg,#131a27 0%,#0b0c14 100%)' }}
     >
       {/* Wide landscape banner — matches reference aspect ratio */}
-      <div className="relative overflow-hidden" style={{ aspectRatio: '16/7' }}>
+      <div className="relative overflow-hidden aspect-tournament">
         <img
           src={t.image}
           alt={t.name}
@@ -33,8 +32,7 @@ function TournamentCard({ t, onDetail }: { t: Tournament; onDetail: () => void }
 
         {/* Badge — top left */}
         <span
-          className="absolute top-2.5 left-3 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full"
-          style={{ backgroundColor: t.badgeColor }}
+          className="absolute top-2.5 left-3 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full dyn-bg" style={{ '--dyn-bg': t.badgeColor } as React.CSSProperties}
         >
           {t.badge}
         </span>
@@ -58,7 +56,7 @@ function TournamentCard({ t, onDetail }: { t: Tournament; onDetail: () => void }
         {/* Total prize */}
         <div>
           <p className="text-gray-500 text-[9px] uppercase tracking-wider leading-none mb-0.5">Prêmio Total</p>
-          <p className="font-extrabold text-base leading-none" style={{ color: '#D4AF37' }}>{t.totalPrize}</p>
+          <p className="font-extrabold text-base leading-none text-[#D4AF37]">{t.totalPrize}</p>
         </div>
 
         {/* Prize chips row */}
@@ -82,8 +80,7 @@ function TournamentCard({ t, onDetail }: { t: Tournament; onDetail: () => void }
         ) : (
           <button
             onClick={onDetail}
-            className="w-full py-2 rounded-xl text-xs font-bold text-black hover:opacity-90 transition-opacity"
-            style={{ backgroundColor: '#D4AF37' }}
+            className="w-full py-2 rounded-xl text-xs font-bold text-black hover:opacity-90 transition-opacity bg-[#D4AF37]"
           >
             Saiba mais
           </button>
@@ -107,6 +104,14 @@ const FILTERS: { key: TFilter; label: string }[] = [
 
 export function TournamentsPage({ onGoHome, onNavigateStatic, onSelectTournament }: Props) {
   const [filter, setFilter] = useState<TFilter>('todos');
+  const filterScrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = filterScrollRef.current;
+    if (!container) return;
+    const activeBtn = container.querySelector<HTMLButtonElement>(`[data-nav-id="${filter}"]`);
+    activeBtn?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }, [filter]);
 
   const available = tournaments.filter(t => t.status === 'available');
   const finished   = tournaments.filter(t => t.status === 'finished');
@@ -127,8 +132,8 @@ export function TournamentsPage({ onGoHome, onNavigateStatic, onSelectTournament
             <ChevronLeft className="w-3.5 h-3.5" /> Início
           </button>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#D4AF3722' }}>
-              <Trophy className="w-5 h-5" style={{ color: '#D4AF37' }} />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-[#D4AF3722]">
+              <Trophy className="w-5 h-5 text-[#D4AF37]" />
             </div>
             <div>
               <h1 className="text-white font-bold text-xl leading-tight">Torneios</h1>
@@ -141,15 +146,16 @@ export function TournamentsPage({ onGoHome, onNavigateStatic, onSelectTournament
       </div>
 
       {/* Sticky filter tabs */}
-      <div className="sticky top-0 z-30 bg-[#16103D] border-b border-white/15">
+      <div className="sticky top-0 z-30 border-b border-white/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex gap-2 py-3 sm:pt-4 sm:pb-3 overflow-x-auto [scrollbar-width:none]">
+          <div ref={filterScrollRef} className="flex gap-2 py-3 sm:pt-4 sm:pb-3 overflow-x-auto [scrollbar-width:none]">
             {FILTERS.map(f => (
               <button
                 key={f.key}
+                data-nav-id={f.key}
                 onClick={() => setFilter(f.key)}
-                style={{ flexShrink: 0, backgroundColor: filter === f.key ? '#D4AF37' : undefined }}
-                className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors ${
+                style={{ '--dyn-bg': filter === f.key ? '#D4AF37' : undefined } as React.CSSProperties}
+                className={`shrink-0 dyn-bg px-5 py-2 rounded-full text-sm font-semibold transition-colors ${
                   filter === f.key
                     ? 'text-black'
                     : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/[0.08]'
@@ -170,10 +176,10 @@ export function TournamentsPage({ onGoHome, onNavigateStatic, onSelectTournament
             <section>
               <div className="flex items-center gap-3 mb-6">
                 <div className="flex items-center gap-2">
-                  <Medal className="w-5 h-5" style={{ color: '#D4AF37' }} />
+                  <Medal className="w-5 h-5 text-[#D4AF37]" />
                   <h2 className="text-white font-bold text-lg">Disponíveis</h2>
                 </div>
-                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full" style={{ backgroundColor: '#D4AF3722', color: '#D4AF37' }}>
+                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#D4AF3722] text-[#D4AF37]">
                   {available.length}
                 </span>
               </div>

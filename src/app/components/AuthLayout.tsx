@@ -9,8 +9,7 @@ interface Props {
 export function AuthLayout({ children, onGoHome }: Props) {
   return (
     <div
-      className="min-h-screen w-full flex flex-col items-center justify-center px-4 py-16"
-      style={{ background: 'radial-gradient(circle at 50% -10%, #3d1f8f 0%, #1a1147 45%, #16103D 100%)' }}
+      className="min-h-screen w-full flex flex-col items-center justify-center px-4 py-16 auth-page-bg"
     >
       <div className="relative w-full max-w-md">
         {/* Animated logo badge — same rotating ring / glow as the mobile bottom nav,
@@ -27,8 +26,7 @@ export function AuthLayout({ children, onGoHome }: Props) {
         </button>
 
         <div
-          className="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 pt-9"
-          style={{ background: 'radial-gradient(circle 260px at center 120%, #3d1f8f, #110936)' }}
+          className="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/15 pt-9 auth-card-glow"
         >
           {children}
         </div>

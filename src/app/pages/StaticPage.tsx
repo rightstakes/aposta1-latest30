@@ -49,7 +49,7 @@ export function StaticPage({ page, onGoHome, onNavigate }: Props) {
             {page.blocks.map((block, i) => {
               if (block.type === 'h2') {
                 return (
-                  <h2 key={i} className="text-xl sm:text-2xl font-bold mt-8 mb-2 first:mt-0" style={{ color: accent }}>
+                  <h2 key={i} className="text-xl sm:text-2xl font-bold mt-8 mb-2 first:mt-0 dyn-text" style={{ '--dyn-text': accent } as React.CSSProperties}>
                     {block.text}
                   </h2>
                 );
@@ -73,7 +73,7 @@ export function StaticPage({ page, onGoHome, onNavigate }: Props) {
                   <ul key={i} className="space-y-2 pl-1">
                     {block.items?.map((item, j) => (
                       <li key={j} className="flex items-start gap-2 text-sm sm:text-base text-gray-400">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: accent }} />
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 dyn-bg" style={{ '--dyn-bg': accent } as React.CSSProperties} />
                         {item}
                       </li>
                     ))}
@@ -85,7 +85,7 @@ export function StaticPage({ page, onGoHome, onNavigate }: Props) {
                   <ol key={i} className="space-y-2 pl-1">
                     {block.items?.map((item, j) => (
                       <li key={j} className="flex items-start gap-3 text-sm sm:text-base text-gray-400">
-                        <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white mt-0.5" style={{ backgroundColor: accent }}>
+                        <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white mt-0.5 dyn-bg" style={{ '--dyn-bg': accent } as React.CSSProperties}>
                           {j + 1}
                         </span>
                         {item}
@@ -96,7 +96,7 @@ export function StaticPage({ page, onGoHome, onNavigate }: Props) {
               }
               if (block.type === 'highlight') {
                 return (
-                  <div key={i} className="rounded-xl p-4 sm:p-5 border-l-4 bg-white/5" style={{ borderColor: accent }}>
+                  <div key={i} className="rounded-xl p-4 sm:p-5 border-l-4 bg-white/5 dyn-border" style={{ '--dyn-border': accent } as React.CSSProperties}>
                     <p className="text-gray-300 text-sm sm:text-base leading-relaxed">{block.text}</p>
                   </div>
                 );

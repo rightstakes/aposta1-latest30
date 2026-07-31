@@ -35,11 +35,10 @@ export function SmallGameRow({ title, icon, games }: SmallGameRowProps) {
           <h2 className="text-white text-lg">{title}</h2>
         </div>
 
-        <div className="flex gap-2">
+        <div className="hidden sm:flex gap-2">
           <button
             onClick={() => scroll('left')}
-            className="text-white p-2 rounded transition-colors border border-[#00C44D]/40 hover:border-[#00C44D]"
-            style={{ backgroundColor: '#00C44D22' }}
+            className="text-white p-2 rounded transition-colors border border-[#00C44D]/40 hover:border-[#00C44D] bg-[#00C44D22]"
             onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#00C44D')}
             onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#00C44D22')}
           >
@@ -47,8 +46,7 @@ export function SmallGameRow({ title, icon, games }: SmallGameRowProps) {
           </button>
           <button
             onClick={() => scroll('right')}
-            className="text-white p-2 rounded transition-colors border border-[#00C44D]/40 hover:border-[#00C44D]"
-            style={{ backgroundColor: '#00C44D22' }}
+            className="text-white p-2 rounded transition-colors border border-[#00C44D]/40 hover:border-[#00C44D] bg-[#00C44D22]"
             onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#00C44D')}
             onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#00C44D22')}
           >

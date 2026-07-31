@@ -123,10 +123,10 @@ export function NotificationsPage({ onNavigateStatic }: Props) {
                     }`}
                   >
                     <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: `${COLORS[n.type]}1A`, border: `1px solid ${COLORS[n.type]}4D` }}
+                      className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 dyn-bg dyn-border-full"
+                      style={{ '--dyn-bg': `${COLORS[n.type]}1A`, '--dyn-border-full': `1px solid ${COLORS[n.type]}4D` } as React.CSSProperties}
                     >
-                      <Icon className="w-[18px] h-[18px]" style={{ color: COLORS[n.type] }} />
+                      <Icon className="w-[18px] h-[18px] dyn-text" style={{ '--dyn-text': COLORS[n.type] } as React.CSSProperties} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2 mb-1">

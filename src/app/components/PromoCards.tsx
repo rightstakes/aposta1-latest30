@@ -1,12 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
-import banner1 from '@/imports/image-b1-1.png';
-import banner2 from '@/imports/image-b2-1.png';
-import banner3 from '@/imports/image-b3-1.png';
+import banner1 from '@/imports/banner-nova-aposta1.webp';
+import banner2 from '@/imports/banner-odds-brasileirao.webp';
+import banner3 from '@/imports/banner-popok.webp';
+import banner4 from '@/imports/banner-barao-vermelho.webp';
+import banner5 from '@/imports/banner-cashback-slots.webp';
+import banner6 from '@/imports/banner-jetx.webp';
 
 const banners = [
-  { id: 1, image: banner1, alt: 'Bônus de Boas-Vindas 100% até R$500' },
-  { id: 2, image: banner2, alt: 'Cashback Semanal 10% sem Rollover' },
-  { id: 3, image: banner3, alt: 'Torneios Exclusivos - Prêmios Todos os Dias' },
+  { id: 1, image: banner1, alt: 'A Nova Aposta1! Mais moderna, segura e feita pra você' },
+  { id: 2, image: banner2, alt: 'Aproveite as odds do Brasileirão - acesse e monte seu bilhete' },
+  { id: 3, image: banner3, alt: 'A Popok chegou com tudo - descubra os melhores slots da nova provedora' },
+  { id: 4, image: banner4, alt: 'Multiplicador 20.000x - Barão Vermelho está na Aposta1' },
+  { id: 5, image: banner5, alt: 'Cashback nos slots até 20% de retorno' },
+  { id: 6, image: banner6, alt: 'O jato vai decolar - escolha seu assento e busque os maiores níveis no JetX' },
 ];
 
 const DESKTOP_VISIBLE = 2;
@@ -112,10 +118,10 @@ export function PromoCards() {
           onMouseLeave={() => setDesktopPaused(false)}
         >
           <div
-            className="flex -mx-2 transition-transform duration-500 ease-out"
+            className="flex -mx-2 transition-transform duration-500 ease-out dyn-transform"
             style={{
-              transform: `translateX(-${desktopIndex * (100 / DESKTOP_VISIBLE)}%)`,
-            }}
+              '--dyn-transform': `translateX(-${desktopIndex * (100 / DESKTOP_VISIBLE)}%)`,
+            } as React.CSSProperties}
           >
             {banners.map((banner) => (
               <div key={banner.id} className="w-1/2 flex-shrink-0 px-2">

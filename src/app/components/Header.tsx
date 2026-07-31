@@ -1,6 +1,5 @@
-import { Bell, ChevronDown, Menu, X, LayoutDashboard, Wallet, Clock, Landmark, ShieldCheck, PauseCircle, Lock, LogOut } from 'lucide-react';
+import { Bell, ChevronDown, Menu, X, LayoutDashboard, Wallet, Clock, Landmark, ShieldCheck, PauseCircle, Lock, LogOut, RefreshCw } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
-import logoImage from '../../imports/aposta1-logo-new-gold-1.png';
 
 interface HeaderProps {
   onToggleSidebar?: () => void;
@@ -14,7 +13,7 @@ const profileMenuItems = [
   { icon: Wallet,          label: 'Carteira',                  action: 'carteira' },
   { icon: Clock,           label: 'Apostas',                   action: 'apostas' },
   { icon: ShieldCheck,     label: 'Limites',                   action: 'limites' },
-  { icon: PauseCircle,     label: 'Pausas',                    action: 'pausas' },
+  { icon: PauseCircle,     label: 'Pausas',                    action: 'pausas-suspensoes' },
   { icon: Lock,            label: 'Segurança',                 action: 'seguranca' },
   { icon: Landmark,        label: 'Gerenciar Contas Bancárias', action: 'contas-bancarias' },
 ];
@@ -79,7 +78,7 @@ function ProfileDropdown({ compact = false, onNavigate }: { compact?: boolean; o
 
 export function Header({ onToggleSidebar, mobileSidebarOpen, onNavigate, onOpenDeposit }: HeaderProps) {
   return (
-    <header className="bg-[#16103D] border-b border-white/[0.08] px-4 sm:px-6 flex items-center justify-between fixed top-0 left-0 right-0 z-50 h-[82px]">
+    <header className="bg-[#0b062e] px-4 sm:px-6 flex items-center justify-between fixed top-0 left-0 lg:left-32 right-0 z-50 h-[82px]">
       {/* Left side */}
       <div className="flex items-center gap-1 sm:gap-4 lg:gap-6 h-full">
         <button
@@ -100,20 +99,30 @@ export function Header({ onToggleSidebar, mobileSidebarOpen, onNavigate, onOpenD
           <Bell className="w-5 h-5 text-gray-200" />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#D4AF37] rounded-full"></span>
         </button>
-
-        {/* Logo — hidden on mobile */}
-        <div className="hidden sm:flex items-center gap-3 h-full">
-          <img src={logoImage} alt="APOSTA1" className="h-[75px] w-auto" />
-          <span className="text-white font-bold text-xl hidden sm:inline">APOSTA1</span>
-        </div>
       </div>
 
       {/* Right side */}
       <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
+        <button
+          onClick={() => onNavigate?.('notificacoes')}
+          className="relative bg-white/5 p-2 rounded-xl hover:bg-white/10 border border-white/15 hidden md:block"
+        >
+          <Bell className="w-5 h-5 text-gray-200" />
+          <span className="absolute top-1 right-1 w-2 h-2 bg-[#D4AF37] rounded-full"></span>
+        </button>
+
         {/* Depositar box */}
-        <div className="bg-white/5 px-2 sm:px-3 md:px-4 py-2 sm:py-2.5 rounded-xl flex items-center gap-2 sm:gap-3 border border-white/15">
-          <span className="text-[#D4AF37] text-xs sm:text-sm md:text-base font-semibold">R$ 1,200.00</span>
-          <button onClick={onOpenDeposit} className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold">
+        <div className="bg-white/5 px-3 sm:px-3 md:px-4 py-2 sm:py-2.5 rounded-xl flex items-center gap-2 sm:gap-3 border border-white/15">
+          <RefreshCw className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 text-[#D4AF37]" />
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[#D4AF37] text-xs sm:text-sm md:text-base font-semibold leading-none">
+              R$ 1,200.00
+            </span>
+            <span className="text-white text-[9px] sm:text-[10px] md:text-[11px] font-normal leading-none">
+              Bônus: R$3000
+            </span>
+          </div>
+          <button onClick={onOpenDeposit} className="bg-green-500 hover:bg-green-600 text-white px-4 sm:px-4 md:px-5 py-2 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold flex-shrink-0">
             Depositar
           </button>
         </div>
@@ -122,14 +131,6 @@ export function Header({ onToggleSidebar, mobileSidebarOpen, onNavigate, onOpenD
         <div className="md:hidden">
           <ProfileDropdown compact onNavigate={onNavigate} />
         </div>
-
-        <button
-          onClick={() => onNavigate?.('notificacoes')}
-          className="relative bg-white/5 p-2 rounded-xl hover:bg-white/10 border border-white/15 hidden md:block"
-        >
-          <Bell className="w-5 h-5 text-gray-200" />
-          <span className="absolute top-1 right-1 w-2 h-2 bg-[#D4AF37] rounded-full"></span>
-        </button>
 
         {/* Desktop profile — hidden on mobile */}
         <div className="hidden md:block">

@@ -1,72 +1,61 @@
-import { Gift, Percent, Trophy, Zap } from 'lucide-react';
+import { promos } from '../data/promos';
+import type { Promo } from '../data/promos';
+import imgB1 from '../../imports/promo-ganhou-ta-na-conta.webp';
+import imgB2 from '../../imports/promo-comece-a-diversao.webp';
+import imgB3 from '../../imports/promo-aposta-combinada.webp';
+import imgB4 from '../../imports/promo-3-ferramentas.webp';
+import imgB5 from '../../imports/promo-cashback-slots.webp';
+import imgB6 from '../../imports/promo-aposte-alto.webp';
 
-const promotions = [
-  {
-    icon: Gift,
-    title: 'Bônus de Boas-Vindas',
-    description: '100% até R$500 no primeiro depósito',
-    color: 'from-purple-600 to-purple-700',
-    badge: 'NOVO',
-  },
-  {
-    icon: Percent,
-    title: 'Cashback Semanal',
-    description: '10% de volta em todas as perdas',
-    color: 'from-blue-600 to-blue-700',
-    badge: 'POPULAR',
-  },
-  {
-    icon: Trophy,
-    title: 'Torneio do Mês',
-    description: 'Prêmios de até R$50.000',
-    color: 'from-yellow-600 to-orange-600',
-    badge: 'LIMITADO',
-  },
-  {
-    icon: Zap,
-    title: 'Giros Grátis',
-    description: '50 rodadas em slots selecionados',
-    color: 'from-pink-600 to-pink-700',
-    badge: 'ATIVO',
-  },
-];
+const BANNERS = { b1: imgB1, b2: imgB2, b3: imgB3, b4: imgB4, b5: imgB5, b6: imgB6 };
 
-export function PromotionsSection() {
+function PromoCard({ promo, onOpen }: { promo: Promo; onOpen: () => void }) {
+  const banner = BANNERS[promo.bannerKey];
+  return (
+    <div className="rounded-xl overflow-hidden border border-white/10 bg-[#1a1147] flex flex-col hover:border-white/20 transition-colors">
+      <div className="h-44 overflow-hidden bg-[#0E092E]">
+        <img src={banner} alt={promo.title} className="w-full h-full object-cover" />
+      </div>
+      <div className="p-5 flex flex-col flex-1">
+        <span
+          className="self-start text-black text-[10px] font-extrabold px-2.5 py-1 rounded-lg mb-3 uppercase tracking-wide dyn-bg" style={{ '--dyn-bg': promo.tagColor } as React.CSSProperties}
+        >
+          {promo.tag}
+        </span>
+        <h3 className="text-white font-bold text-base mb-1 leading-snug">{promo.title}</h3>
+        <p className="text-gray-400 text-xs mb-1">{promo.subtitle}</p>
+        <p className="text-gray-500 text-sm leading-relaxed flex-1 mb-4">{promo.description}</p>
+        <button
+          onClick={onOpen}
+          className="w-full py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90 bg-[#00C44D]"
+        >
+          {promo.cta}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+interface Props {
+  onOpenPromo: (id: string) => void;
+  onSeeAll: () => void;
+}
+
+export function PromotionsSection({ onOpenPromo, onSeeAll }: Props) {
+  const preview = promos.slice(0, 3);
+
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-white text-2xl font-bold">Promoções Ativas</h2>
-        <button className="text-purple-400 text-sm hover:text-purple-300">
+        <button onClick={onSeeAll} className="text-purple-400 text-sm hover:text-purple-300">
           Ver Todas →
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {promotions.map((promo, index) => (
-          <div
-            key={index}
-            className={`bg-gradient-to-br ${promo.color} rounded-xl p-6 relative overflow-hidden group hover:scale-105 transition-transform cursor-pointer border border-purple-600/20 hover:border-purple-500/40`}
-          >
-            <div className="absolute top-3 right-3">
-              <span className="bg-white/20 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm">
-                {promo.badge}
-              </span>
-            </div>
-
-            <div className="mb-4">
-              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3">
-                <promo.icon className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-white font-bold text-lg mb-2">{promo.title}</h3>
-              <p className="text-white/90 text-sm">{promo.description}</p>
-            </div>
-
-            <button className="bg-white text-gray-900 px-4 py-2 rounded text-sm font-medium hover:bg-gray-100 transition-colors w-full">
-              Participar
-            </button>
-
-            <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
-          </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {preview.map(promo => (
+          <PromoCard key={promo.id} promo={promo} onOpen={() => onOpenPromo(promo.id)} />
         ))}
       </div>
     </div>

@@ -193,15 +193,14 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
   const [flipped, setFlipped] = useState(false);
 
   return (
-    <div className="h-full" style={{ perspective: '1200px' }}>
+    <div className="h-full card-3d-perspective">
       <div
-        className="relative w-full h-full transition-transform duration-500"
-        style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+        className="relative w-full h-full transition-transform duration-500 card-3d-flip dyn-transform"
+        style={{ '--dyn-transform': flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' } as React.CSSProperties}
       >
         {/* ── FRONT ── */}
         <div
-          className={`relative w-full h-full min-h-[280px] rounded-2xl border flex flex-col ${bonus.status === 'inactive' ? 'border-white/20 opacity-55' : 'border-white/15'}`}
-          style={{ backfaceVisibility: 'hidden', background: 'radial-gradient(circle 200px at center 120%, #3d1f8f, #110936)' }}
+          className={`relative w-full h-full min-h-[280px] rounded-2xl border flex flex-col bonus-card-face ${bonus.status === 'inactive' ? 'border-white/20 opacity-55' : 'border-white/15'}`}
         >
           {/* LIVE badge */}
           {bonus.status === 'active' && (
@@ -221,16 +220,15 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
               {/* Right: emoji + Rules button stacked */}
               <div className="flex flex-col items-center gap-2 flex-shrink-0">
                 <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl"
-                  style={{ background: bonus.accentColor + '20', border: `1px solid ${bonus.accentColor}30` }}
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl dyn-bg-full dyn-border-full"
+                  style={{ '--dyn-bg-full': bonus.accentColor + '20', '--dyn-border-full': `1px solid ${bonus.accentColor}30` } as React.CSSProperties}
                 >
                   {bonus.emoji}
                 </div>
                 {bonus.status !== 'inactive' && (
                   <button
                     onClick={() => setFlipped(true)}
-                    className="text-[10px] font-semibold px-2.5 py-1 rounded-xl border transition-colors hover:bg-white/10 whitespace-nowrap"
-                    style={{ borderColor: bonus.accentColor + '60', color: bonus.accentColor }}
+                    className="text-[10px] font-semibold px-2.5 py-1 rounded-xl border transition-colors hover:bg-white/10 whitespace-nowrap dyn-border dyn-text" style={{ '--dyn-border': bonus.accentColor + '60', '--dyn-text': bonus.accentColor } as React.CSSProperties}
                   >
                     Regras
                   </button>
@@ -250,7 +248,7 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="bg-white/8 rounded-xl px-3 py-2.5 flex flex-col gap-1 border border-white/15">
                   <div className="flex items-center gap-1">
-                    <Icon className="w-3 h-3 flex-shrink-0" style={{ color: bonus.accentColor }} />
+                    <Icon className="w-3 h-3 flex-shrink-0 dyn-text" style={{ '--dyn-text': bonus.accentColor } as React.CSSProperties} />
                     <p className="text-[9px] text-gray-300 uppercase tracking-wide">{label}</p>
                   </div>
                   <p className="text-white text-xs font-semibold truncate">{value}</p>
@@ -265,14 +263,14 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
                   <button className="flex-1 py-2.5 rounded-xl text-xs font-bold border border-white/10 text-gray-300 hover:bg-white/5 transition-colors flex items-center justify-center gap-1.5">
                     <XCircle className="w-3.5 h-3.5" /> Desistir
                   </button>
-                  <button className="flex-1 py-2.5 rounded-xl text-xs font-bold text-white hover:opacity-90 flex items-center justify-center gap-1.5" style={{ backgroundColor: '#00C44D' }}>
+                  <button className="flex-1 py-2.5 rounded-xl text-xs font-bold text-white hover:opacity-90 flex items-center justify-center gap-1.5 bg-[#00C44D]">
                     <CheckCircle2 className="w-3.5 h-3.5" /> Continuar
                   </button>
                 </div>
               )}
               {bonus.status === 'available' && (
                 bonus.requiresDeposit ? (
-                  <button className="w-full py-2.5 rounded-xl text-xs font-bold text-white hover:opacity-90 transition-opacity" style={{ backgroundColor: '#00C44D' }}>
+                  <button className="w-full py-2.5 rounded-xl text-xs font-bold text-white hover:opacity-90 transition-opacity bg-[#00C44D]">
                     DEPOSITE AGORA PARA ATIVAR
                   </button>
                 ) : (
@@ -280,7 +278,7 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
                     <button className="flex-1 py-2.5 rounded-xl text-xs font-bold border border-white/10 text-gray-300 hover:bg-white/5 transition-colors flex items-center justify-center gap-1.5">
                       <XCircle className="w-3.5 h-3.5" /> Rejeitar
                     </button>
-                    <button className="flex-1 py-2.5 rounded-xl text-xs font-bold text-white hover:opacity-90 flex items-center justify-center gap-1.5" style={{ backgroundColor: '#00C44D' }}>
+                    <button className="flex-1 py-2.5 rounded-xl text-xs font-bold text-white hover:opacity-90 flex items-center justify-center gap-1.5 bg-[#00C44D]">
                       <Gift className="w-3.5 h-3.5" /> Ativar
                     </button>
                   </div>
@@ -295,8 +293,7 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
 
         {/* ── BACK — Rules ── */}
         <div
-          className="absolute inset-0 rounded-2xl border border-white/15 flex flex-col min-h-0"
-          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', background: 'radial-gradient(circle 200px at center 120%, #3d1f8f, #110936)' }}
+          className="absolute inset-0 rounded-2xl border border-white/15 flex flex-col min-h-0 bonus-card-back"
         >
           <div className="p-5 flex flex-col flex-1 gap-4 min-h-0">
             <div className="flex items-center justify-between">
@@ -311,7 +308,7 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
             <ul className="space-y-2.5 flex-1 min-h-0 overflow-y-auto [scrollbar-width:none]">
               {bonus.rules.map((rule, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-xs text-gray-400 leading-relaxed">
-                  <span className="w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center text-[9px] font-bold text-white mt-0.5" style={{ backgroundColor: '#00C44D' }}>
+                  <span className="w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center text-[9px] font-bold text-white mt-0.5 bg-[#00C44D]">
                     {i + 1}
                   </span>
                   {rule}
@@ -340,13 +337,13 @@ export function BonusPage({ onNavigateStatic, onOpenDeposit }: Props) {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Sticky tab bar */}
-      <div className="sticky top-0 z-30 bg-[#16103D]">
+      <div className="sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] py-3 sm:pt-5 sm:pb-3">
             {SECTIONS.map(s => (
               <a key={s.key} href={`#${s.key}`}
                 className="flex-shrink-0 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-medium bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
-                <s.icon className="w-3.5 h-3.5" style={{ color: s.color }} />
+                <s.icon className="w-3.5 h-3.5 dyn-text" style={{ '--dyn-text': s.color } as React.CSSProperties} />
                 {s.label}
               </a>
             ))}
@@ -371,8 +368,7 @@ export function BonusPage({ onNavigateStatic, onOpenDeposit }: Props) {
                 className="flex-1 bg-[#1a1147] border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm placeholder-gray-400 focus:outline-none focus:border-[#00C44D] transition-colors uppercase tracking-widest"
               />
               <button
-                className="px-6 py-2.5 rounded-xl text-sm font-bold text-white hover:opacity-90 transition-opacity whitespace-nowrap"
-                style={{ backgroundColor: '#00C44D' }}
+                className="px-6 py-2.5 rounded-xl text-sm font-bold text-white hover:opacity-90 transition-opacity whitespace-nowrap bg-[#00C44D]"
               >
                 Resgatar
               </button>
@@ -385,9 +381,9 @@ export function BonusPage({ onNavigateStatic, onOpenDeposit }: Props) {
             return (
               <div key={section.key} id={section.key}>
                 <div className="flex items-center gap-2 mb-4">
-                  <section.icon className="w-5 h-5" style={{ color: section.color }} />
+                  <section.icon className="w-5 h-5 dyn-text" style={{ '--dyn-text': section.color } as React.CSSProperties} />
                   <h2 className="text-white font-bold text-lg">{section.label}</h2>
-                  <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: section.color + '33', color: section.color }}>
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white dyn-bg dyn-text" style={{ '--dyn-bg': section.color + '33', '--dyn-text': section.color } as React.CSSProperties}>
                     {sectionBonuses.length}
                   </span>
                 </div>

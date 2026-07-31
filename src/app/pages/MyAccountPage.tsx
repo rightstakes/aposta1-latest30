@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   User, Wallet, ClipboardList, ShieldCheck, Lock, Landmark,
   LogOut, ArrowUpRight, ArrowDownToLine, History, ChevronRight,
   Clock, TrendingUp, Gift, BadgeCheck, Trash2, Plus, Eye, EyeOff,
   ToggleLeft, ToggleRight, AlertCircle, CheckCircle2, CalendarDays,
-  ChevronDown, ChevronUp
+  ChevronDown, ChevronUp, ArrowLeft, X, ExternalLink, UserX, Receipt, Download
 } from 'lucide-react';
 import { Footer } from '../components/Footer';
 
-type AccountSection = 'minha-conta' | 'carteira' | 'apostas' | 'limites' | 'seguranca' | 'contas-bancarias';
+type AccountSection = 'minha-conta' | 'carteira' | 'apostas' | 'limites' | 'seguranca' | 'contas-bancarias' | 'pausas-suspensoes' | 'imposto-renda';
 
 interface Props {
   onGoHome: () => void;
@@ -25,6 +25,8 @@ const navItems: { id: AccountSection; icon: React.ElementType; label: string }[]
   { id: 'limites', icon: ShieldCheck, label: 'Limites' },
   { id: 'seguranca', icon: Lock, label: 'Segurança' },
   { id: 'contas-bancarias', icon: Landmark, label: 'Contas Bancárias' },
+  { id: 'pausas-suspensoes', icon: UserX, label: 'Pausas e Suspensões' },
+  { id: 'imposto-renda', icon: Receipt, label: 'Imposto de Renda' },
 ];
 
 const stats = [
@@ -67,8 +69,8 @@ function MinhaConta({ onOpenDeposit, onOpenWithdraw }: { onOpenDeposit?: () => v
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {stats.map(s => (
           <div key={s.label} className="bg-[#1a1147] rounded-xl p-4 border border-white/15 flex items-start gap-3">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: s.color + '22' }}>
-              <s.icon className="w-4 h-4" style={{ color: s.color }} />
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 dyn-bg" style={{ '--dyn-bg': s.color + '22' } as React.CSSProperties}>
+              <s.icon className="w-4 h-4 dyn-text" style={{ '--dyn-text': s.color } as React.CSSProperties} />
             </div>
             <div className="min-w-0">
               <p className="text-gray-500 text-xs mb-0.5 truncate">{s.label}</p>
@@ -79,11 +81,11 @@ function MinhaConta({ onOpenDeposit, onOpenWithdraw }: { onOpenDeposit?: () => v
       </div>
 
       {/* Balance card — full width above form */}
-      <div className="rounded-xl p-5 border border-white/15" style={{ background: 'linear-gradient(135deg,#1a1147 0%,#2d1569 100%)' }}>
+      <div className="rounded-xl p-5 border border-white/15 account-gradient-a">
         <p className="text-gray-400 text-xs mb-1">Saldo Disponível</p>
         <p className="text-white text-3xl font-extrabold tracking-tight mb-4">R$ 1.200,00</p>
         <div className="flex gap-3">
-          <button onClick={onOpenDeposit} className="flex-1 sm:flex-none sm:px-8 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90" style={{ backgroundColor: '#00C44D' }}>
+          <button onClick={onOpenDeposit} className="flex-1 sm:flex-none sm:px-8 py-2.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90 bg-[#00C44D]">
             Depositar
           </button>
           <button onClick={onOpenWithdraw} className="flex-1 sm:flex-none sm:px-8 py-2.5 rounded-xl text-white text-sm font-semibold bg-white/10 hover:bg-white/20 transition-colors border border-white/10">
@@ -160,7 +162,7 @@ function MinhaConta({ onOpenDeposit, onOpenWithdraw }: { onOpenDeposit?: () => v
                 <input className={inputCls} placeholder="CPF, e-mail ou celular" value={form.pix} onChange={set('pix')} />
               </div>
             </div>
-            <button className="mt-2 px-6 py-2.5 rounded-lg text-white text-sm font-semibold transition-opacity hover:opacity-90" style={{ backgroundColor: '#00C44D' }}>
+            <button className="mt-2 px-6 py-2.5 rounded-lg text-white text-sm font-semibold transition-opacity hover:opacity-90 bg-[#00C44D]">
               Salvar Alterações
             </button>
           </div>
@@ -187,7 +189,7 @@ function MinhaConta({ onOpenDeposit, onOpenWithdraw }: { onOpenDeposit?: () => v
                   <span className="text-gray-400 text-xs">{item.label}</span>
                 </div>
               ))}
-              <button className="mt-2 w-full py-2.5 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-90" style={{ backgroundColor: '#D4AF37' }}>
+              <button className="mt-2 w-full py-2.5 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-90 bg-[#D4AF37]">
                 Verificar Agora
               </button>
             </div>
@@ -227,8 +229,7 @@ function Pager({ page, total, onChange }: { page: number; total: number; onChang
           className="px-2.5 py-1.5 rounded bg-white/5 hover:bg-white/10 disabled:opacity-30">‹</button>
         {Array.from({ length: pages }, (_, i) => i + 1).map(p => (
           <button key={p} onClick={() => onChange(p)}
-            className="px-2.5 py-1.5 rounded transition-colors"
-            style={{ backgroundColor: p === page ? '#00C44D' : 'rgba(255,255,255,0.05)', color: 'white' }}>
+            className="px-2.5 py-1.5 rounded transition-colors dyn-bg dyn-text" style={{ '--dyn-bg': p === page ? '#00C44D' : 'rgba(255,255,255,0.05)', '--dyn-text': 'white' } as React.CSSProperties}>
             {p}
           </button>
         ))}
@@ -240,25 +241,26 @@ function Pager({ page, total, onChange }: { page: number; total: number; onChang
 }
 
 function DateFilter({ from, to, onFrom, onTo }: { from: string; to: string; onFrom: (v: string) => void; onTo: (v: string) => void }) {
+  const dateInputCls = 'flex-1 min-w-0 sm:flex-none bg-[#0e092e] border border-white/10 rounded-lg px-2 py-1.5 text-white text-xs focus:outline-none focus:border-[#00C44D] [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:cursor-pointer';
+
   return (
-    <div className="flex flex-wrap items-center gap-3 mb-4 pb-4 border-b border-white/15">
-      <CalendarDays className="w-4 h-4 text-gray-400 flex-shrink-0" />
+    <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 mb-4 pb-4 border-b border-white/15">
       <div className="flex items-center gap-2">
-        <label className="text-gray-500 text-xs">De</label>
-        <input type="date" value={from} onChange={e => onFrom(e.target.value)}
-          className="bg-[#0e092e] border border-white/10 rounded-lg px-2 py-1.5 text-white text-xs focus:outline-none focus:border-[#00C44D] [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:cursor-pointer" />
+        <CalendarDays className="w-4 h-4 text-gray-400 flex-shrink-0 hidden sm:block" />
+        <label className="text-gray-500 text-xs flex-shrink-0">De</label>
+        <input type="date" value={from} onChange={e => onFrom(e.target.value)} className={dateInputCls} />
       </div>
       <div className="flex items-center gap-2">
-        <label className="text-gray-500 text-xs">Até</label>
-        <input type="date" value={to} onChange={e => onTo(e.target.value)}
-          className="bg-[#0e092e] border border-white/10 rounded-lg px-2 py-1.5 text-white text-xs focus:outline-none focus:border-[#00C44D] [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:cursor-pointer" />
+        <label className="text-gray-500 text-xs flex-shrink-0">Até</label>
+        <input type="date" value={to} onChange={e => onTo(e.target.value)} className={dateInputCls} />
+        <button className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white hover:opacity-90 flex-shrink-0 bg-[#00C44D]">
+          Filtrar
+        </button>
       </div>
-      <button className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white hover:opacity-90" style={{ backgroundColor: '#00C44D' }}>
-        Filtrar
-      </button>
     </div>
   );
 }
+
 
 function Carteira({ onOpenWithdraw }: { onOpenWithdraw?: () => void }) {
   const [tab, setTab] = useState<'depositos' | 'saques'>('depositos');
@@ -292,13 +294,13 @@ function Carteira({ onOpenWithdraw }: { onOpenWithdraw?: () => void }) {
         ].map(c => (
           <div key={c.label} className="bg-[#1a1147] rounded-xl p-4 border border-white/15">
             <p className="text-gray-500 text-xs mb-1">{c.label}</p>
-            <p className="font-extrabold text-lg" style={{ color: c.color }}>{c.value}</p>
+            <p className="font-extrabold text-lg dyn-text" style={{ '--dyn-text': c.color } as React.CSSProperties}>{c.value}</p>
           </div>
         ))}
       </div>
 
       <div className="flex gap-3">
-        <button className="flex-1 py-2.5 rounded-xl text-white text-sm font-semibold hover:opacity-90" style={{ backgroundColor: '#00C44D' }}>
+        <button className="flex-1 py-2.5 rounded-xl text-white text-sm font-semibold hover:opacity-90 bg-[#00C44D]">
           Depositar
         </button>
         <button onClick={onOpenWithdraw} className="flex-1 py-2.5 rounded-xl text-white text-sm font-semibold bg-white/10 hover:bg-white/20 border border-white/10 transition-colors">
@@ -377,7 +379,7 @@ function Apostas() {
         ].map(c => (
           <div key={c.label} className="bg-[#1a1147] rounded-xl p-4 border border-white/15">
             <p className="text-gray-500 text-xs mb-1">{c.label}</p>
-            <p className="font-extrabold text-base sm:text-lg" style={{ color: c.color }}>{c.value}</p>
+            <p className="font-extrabold text-base sm:text-lg dyn-text" style={{ '--dyn-text': c.color } as React.CSSProperties}>{c.value}</p>
           </div>
         ))}
       </div>
@@ -489,7 +491,7 @@ function Limites() {
                   />
                 </div>
               </div>
-              <button className="mt-4 px-5 py-2 rounded-lg text-white text-sm font-semibold hover:opacity-90" style={{ backgroundColor: '#00C44D' }}>
+              <button className="mt-4 px-5 py-2 rounded-lg text-white text-sm font-semibold hover:opacity-90 bg-[#00C44D]">
                 Salvar Limite
               </button>
             </div>
@@ -533,7 +535,7 @@ function Seguranca() {
               </div>
             </div>
           ))}
-          <button className="w-full py-2.5 rounded-lg text-white text-sm font-semibold hover:opacity-90" style={{ backgroundColor: '#D4AF37' }}>
+          <button className="w-full py-2.5 rounded-lg text-white text-sm font-semibold hover:opacity-90 bg-[#D4AF37]">
             Atualizar Senha
           </button>
         </div>
@@ -564,49 +566,302 @@ function Seguranca() {
   );
 }
 
-// ─── Pausas ──────────────────────────────────────────────────────────────────
-function Pausas() {
-  const [selected, setSelected] = useState<string | null>(null);
-  const durations = ['24 Horas', '3 Dias', '1 Semana', '2 Semanas', '1 Mês', '6 Meses'];
+// ─── Pausas e Suspensões ────────────────────────────────────────────────────
+const PRESET_DAYS: Record<string, number> = {
+  '24 Horas': 1,
+  '1 Semana': 7,
+  '2 Semanas': 14,
+  '3 Semanas': 21,
+  '4 Semanas': 28,
+  '5 Semanas': 35,
+  '6 Semanas': 42,
+};
+
+const dayLabel = (d: number) => {
+  const found = Object.entries(PRESET_DAYS).find(([, v]) => v === d);
+  if (found) return found[0];
+  return `${d} ${d === 1 ? 'Dia' : 'Dias'}`;
+};
+
+const REASONS = [
+  'Decisão voluntária',
+  'Dificuldades financeiras',
+  'Perda de controle sobre o jogo (saúde mental)',
+  'Recomendação profissional de um profissional de saúde',
+  'Impedir que meus dados sejam usados em plataformas de apostas',
+  'Não desejo informar',
+];
+
+function ConfirmModal({
+  open, title, description, reasons, onCancel, onConfirm,
+}: {
+  open: boolean;
+  title: string;
+  description: string;
+  reasons: string[];
+  onCancel: () => void;
+  onConfirm: (reason: string) => void;
+}) {
+  const [reason, setReason] = useState(reasons[0]);
+
+  if (!open) return null;
 
   return (
-    <div className="space-y-5 max-w-lg">
-      <div className="bg-[#1a1147] rounded-xl p-4 border border-red-500/20 flex gap-3">
-        <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-        <p className="text-gray-300 text-xs leading-relaxed">
-          Durante a pausa você não poderá acessar sua conta, realizar apostas, depósitos ou saques. Saques pendentes continuam sendo processados.
-        </p>
-      </div>
-
-      <div className="bg-[#1a1147] rounded-xl border border-white/15 overflow-hidden">
-        <div className="px-5 py-4 border-b border-white/15">
-          <h3 className="text-white font-semibold text-sm">Escolha o período de pausa</h3>
-        </div>
-        <div className="p-5">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
-            {durations.map(d => (
-              <button
-                key={d}
-                onClick={() => setSelected(d)}
-                className={`py-3 rounded-xl text-sm font-medium border transition-all ${
-                  selected === d
-                    ? 'text-white border-[#00C44D]'
-                    : 'text-gray-400 border-white/10 hover:border-white/30 bg-[#0e092e]'
-                }`}
-                style={selected === d ? { backgroundColor: '#00C44D22', color: '#00C44D' } : {}}
-              >
-                {d}
-              </button>
-            ))}
-          </div>
-          <button
-            disabled={!selected}
-            className="w-full py-3 rounded-xl text-white text-sm font-semibold disabled:opacity-40 transition-opacity hover:opacity-90"
-            style={{ backgroundColor: '#00C44D' }}
-          >
-            {selected ? `Pausar por ${selected}` : 'Selecione um período'}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60" onClick={onCancel}>
+      <div
+        onClick={e => e.stopPropagation()}
+        className="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border border-white/15 account-gradient-b"
+      >
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/15">
+          <h3 className="text-white font-bold text-base">{title}</h3>
+          <button onClick={onCancel} className="text-gray-400 hover:text-white transition-colors">
+            <X className="w-5 h-5" />
           </button>
         </div>
+        <div className="px-6 py-5">
+          <p className="text-gray-300 text-sm leading-relaxed mb-4">{description}</p>
+          <div className="space-y-2.5">
+            {reasons.map(r => (
+              <label key={r} className="flex items-center gap-3 cursor-pointer group">
+                <input
+                  type="radio"
+                  name="reason"
+                  checked={reason === r}
+                  onChange={() => setReason(r)}
+                  className="w-4 h-4 accent-[#00C44D] flex-shrink-0"
+                />
+                <span className="text-gray-300 text-sm group-hover:text-white transition-colors">{r}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+        <div className="flex gap-3 px-6 py-4 border-t border-white/15">
+          <button
+            onClick={onCancel}
+            className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-gray-300 bg-white/5 hover:bg-white/10 border border-white/15 transition-colors"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={() => onConfirm(reason)}
+            className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white hover:opacity-90 transition-opacity bg-[#00C44D]"
+          >
+            Sim, continuar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PausasSuspensoes({ onBack }: { onBack?: () => void }) {
+  const [tab, setTab] = useState<'pausa' | 'suspensao'>('pausa');
+  const [days, setDays] = useState(1);
+  const [suspensaoPeriodo, setSuspensaoPeriodo] = useState<string | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [confirmed, setConfirmed] = useState<{ pausa?: string; suspensao?: string }>({});
+
+  const suspensaoOptions = ['24 Horas', '1 Semana', '2 Semanas', '3 Semanas', '4 Semanas', '5 Semanas', '6 Semanas', 'Permanentemente'];
+
+  const handleConfirm = () => {
+    if (tab === 'pausa') setConfirmed(p => ({ ...p, pausa: dayLabel(days) }));
+    else if (suspensaoPeriodo) setConfirmed(p => ({ ...p, suspensao: suspensaoPeriodo }));
+    setModalOpen(false);
+  };
+
+  const activeConfirmed = tab === 'pausa' ? confirmed.pausa : confirmed.suspensao;
+
+  return (
+    <div className="space-y-5 max-w-5xl">
+      <button onClick={onBack} className="flex items-center gap-2 text-[#D4AF37] font-bold text-lg hover:text-[#FFD700] transition-colors">
+        <ArrowLeft className="w-5 h-5" /> Pausas e Suspensões
+      </button>
+
+      {/* Inner tabs */}
+      <div className="flex gap-6 border-b border-white/15">
+        <button
+          onClick={() => setTab('pausa')}
+          className={`pb-3 text-sm font-medium transition-colors border-b-2 -mb-px ${
+            tab === 'pausa' ? 'text-white border-[#00C44D]' : 'text-gray-500 border-transparent hover:text-gray-300'
+          }`}
+        >
+          Pausa nas Apostas
+        </button>
+        <button
+          onClick={() => setTab('suspensao')}
+          className={`pb-3 text-sm font-medium transition-colors border-b-2 -mb-px ${
+            tab === 'suspensao' ? 'text-white border-[#00C44D]' : 'text-gray-500 border-transparent hover:text-gray-300'
+          }`}
+        >
+          Suspensão da Conta
+        </button>
+      </div>
+
+      <div className="rounded-xl border border-white/15 overflow-hidden account-gradient-b">
+        <div className="px-6 py-4 border-b border-white/15">
+          <h3 className="text-white font-bold text-base">{tab === 'pausa' ? 'Coloque sua conta em pausa' : 'Suspender sua conta'}</h3>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+          {/* Main controls */}
+          <div className="lg:col-span-2 space-y-5">
+            {activeConfirmed && (
+              <div className="rounded-xl p-4 border border-[#00C44D]/30 flex items-start gap-3 bg-[#00C44D15]">
+                <CheckCircle2 className="w-4 h-4 text-[#00C44D] flex-shrink-0 mt-0.5" />
+                <p className="text-gray-200 text-xs leading-relaxed">
+                  {tab === 'pausa' ? 'Sua conta está pausada — ' : 'Sua conta está suspensa — '}
+                  <strong className="text-white">{activeConfirmed}</strong>.
+                </p>
+              </div>
+            )}
+
+            {tab === 'pausa' ? (
+              <>
+                <div className="grid grid-cols-2 gap-3">
+                  {Object.keys(PRESET_DAYS).map(label => (
+                    <button
+                      key={label}
+                      onClick={() => setDays(PRESET_DAYS[label])}
+                      className={`text-left py-3 px-4 rounded-xl text-sm border transition-all ${
+                        days === PRESET_DAYS[label] ? 'border-[#00C44D] bg-[#00C44D]/10' : 'border-white/15 hover:border-white/30 bg-[#0e092e]/60'
+                      }`}
+                    >
+                      <span className="block text-white font-medium">Pausar apostas por</span>
+                      <span className={`block text-xs mt-0.5 ${days === PRESET_DAYS[label] ? 'text-[#00C44D]' : 'text-gray-500'}`}>{label}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="pt-2">
+                  <div className="flex justify-between text-xs text-gray-500 mb-2">
+                    <span>1 Dia</span>
+                    <span>45 Dias</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={1}
+                    max={45}
+                    value={days}
+                    onChange={e => setDays(Number(e.target.value))}
+                    className="w-full accent-[#00C44D]"
+                  />
+                  <div className="mt-3 inline-flex flex-col items-start">
+                    <span className="text-gray-500 text-[11px] mb-1">Mínimo</span>
+                    <span className="bg-[#0e092e] border border-white/15 rounded-lg px-3 py-1 text-white text-sm font-semibold">{days}</span>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 gap-3">
+                  {suspensaoOptions.map(label => (
+                    <button
+                      key={label}
+                      onClick={() => setSuspensaoPeriodo(label)}
+                      className={`text-left py-3 px-4 rounded-xl text-sm border transition-all ${
+                        suspensaoPeriodo === label ? 'border-[#00C44D] bg-[#00C44D]/10' : 'border-white/15 hover:border-white/30 bg-[#0e092e]/60'
+                      }`}
+                    >
+                      <span className="block text-white font-medium">Suspender</span>
+                      <span className={`block text-xs mt-0.5 ${suspensaoPeriodo === label ? 'text-[#00C44D]' : 'text-gray-500'}`}>{label}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <button className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-gray-300 border border-white/15 hover:border-white/30 bg-[#0e092e]/60 transition-colors">
+                  Autoexclusão Nacional <ExternalLink className="w-3.5 h-3.5" />
+                </button>
+              </>
+            )}
+
+            <button
+              onClick={() => setModalOpen(true)}
+              disabled={tab === 'suspensao' && !suspensaoPeriodo}
+              className="w-full py-3 rounded-xl text-white text-sm font-semibold disabled:opacity-40 transition-opacity hover:opacity-90 bg-[#00C44D]"
+            >
+              Continuar
+            </button>
+          </div>
+
+          {/* Explanatory text */}
+          <div className="lg:col-span-1 lg:border-l lg:border-white/15 lg:pl-6 space-y-3">
+            {(tab === 'pausa'
+              ? [
+                  'Aqui você pode dar uma pausa nas apostas sem perder o acesso à conta.',
+                  'Durante esse período, você não poderá apostar nem depositar, mas ainda poderá realizar saques.',
+                  'A pausa termina automaticamente no fim do prazo escolhido.',
+                  'A pausa só poderá ser modificada depois de 24 horas.',
+                ]
+              : [
+                  'Aqui você pode suspender o acesso completo à sua conta.',
+                  'Durante o período definido, não será possível acessar, apostar, gerenciar saldo ou sacar.',
+                  'Assim que o prazo terminar, o acesso será reativado automaticamente.',
+                  'Para reativar suspensões permanentes, será necessário falar com o suporte.',
+                ]
+            ).map((t, i) => (
+              <p key={i} className="text-gray-400 text-xs leading-relaxed">{t}</p>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <ConfirmModal
+        open={modalOpen}
+        title={tab === 'pausa' ? 'Pausa nas Apostas' : 'Suspensão da Conta'}
+        description={
+          tab === 'pausa'
+            ? 'Durante este período, você não poderá realizar apostas nem depósitos, mas ainda poderá fazer saques. Selecione o motivo da pausa abaixo (opcional).'
+            : 'Durante o período definido, não será possível acessar, apostar, gerenciar saldo ou sacar. Selecione o motivo abaixo (opcional).'
+        }
+        reasons={REASONS}
+        onCancel={() => setModalOpen(false)}
+        onConfirm={handleConfirm}
+      />
+    </div>
+  );
+}
+
+// ─── Imposto de Renda ────────────────────────────────────────────────────────
+function ImpostoRenda({ onBack }: { onBack?: () => void }) {
+  const [year, setYear] = useState('2025');
+  const [downloading, setDownloading] = useState(false);
+  const years = ['2026', '2025', '2024', '2023', '2022'];
+
+  const handleDownload = () => {
+    setDownloading(true);
+    setTimeout(() => setDownloading(false), 1500);
+  };
+
+  return (
+    <div className="space-y-5 max-w-2xl">
+      <button onClick={onBack} className="flex items-center gap-2 text-[#D4AF37] font-bold text-lg hover:text-[#FFD700] transition-colors">
+        <ArrowLeft className="w-5 h-5" /> Imposto de Renda
+      </button>
+
+      <div className="rounded-xl p-6 border border-white/15 account-gradient-b">
+        <h3 className="text-white font-bold text-lg mb-5">Baixe aqui o seu informe para declaração do Imposto de Renda.</h3>
+
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1">
+            <select
+              value={year}
+              onChange={e => setYear(e.target.value)}
+              className="w-full bg-[#0e092e] border border-white/15 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#00C44D] appearance-none pr-10"
+            >
+              {years.map(y => <option key={y} value={y}>{y}</option>)}
+            </select>
+            <CalendarDays className="w-4 h-4 text-gray-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+          </div>
+          <button
+            onClick={handleDownload}
+            disabled={downloading}
+            className="px-8 py-3.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-60 flex items-center justify-center gap-2 flex-shrink-0 bg-[#00C44D]"
+          >
+            {downloading ? 'Gerando...' : (<><Download className="w-4 h-4" /> Baixar PDF</>)}
+          </button>
+        </div>
+
+        <p className="text-gray-400 text-xs mt-4">Caso tenha dúvidas, entre em contato com o suporte.</p>
       </div>
     </div>
   );
@@ -640,8 +895,7 @@ function ContasBancarias() {
           </div>
           <button
             onClick={() => setShowForm(p => !p)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white hover:opacity-90 transition-opacity"
-            style={{ backgroundColor: '#00C44D' }}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white hover:opacity-90 transition-opacity bg-[#00C44D]"
           >
             <Plus className="w-3.5 h-3.5" /> Adicionar
           </button>
@@ -669,7 +923,7 @@ function ContasBancarias() {
               </select>
             </div>
             <div className="flex items-end gap-2">
-              <button onClick={add} className="px-4 py-2 rounded-lg text-white text-sm font-semibold hover:opacity-90" style={{ backgroundColor: '#00C44D' }}>Salvar</button>
+              <button onClick={add} className="px-4 py-2 rounded-lg text-white text-sm font-semibold hover:opacity-90 bg-[#00C44D]">Salvar</button>
               <button onClick={() => setShowForm(false)} className="px-4 py-2 rounded-lg text-gray-400 text-sm bg-white/5 hover:bg-white/10">Cancelar</button>
             </div>
           </div>
@@ -703,10 +957,18 @@ function ContasBancarias() {
 
 export function MyAccountPage({ onGoHome, onNavigateStatic, initialSection, onOpenDeposit, onOpenWithdraw }: Props) {
   const [activeSection, setActiveSection] = useState<AccountSection>((initialSection as AccountSection) ?? 'minha-conta');
+  const navScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (initialSection) setActiveSection(initialSection as AccountSection);
   }, [initialSection]);
+
+  useEffect(() => {
+    const container = navScrollRef.current;
+    if (!container) return;
+    const activeBtn = container.querySelector<HTMLButtonElement>(`[data-nav-id="${activeSection}"]`);
+    activeBtn?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }, [activeSection]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -744,15 +1006,15 @@ export function MyAccountPage({ onGoHome, onNavigateStatic, initialSection, onOp
           {/* Horizontal nav — scrollable */}
           <div className="mb-6 bg-[#1a1147] rounded-xl border border-white/15 p-1">
             <div
-              className="flex gap-1"
-              style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              ref={navScrollRef}
+              className="flex gap-1 momentum-scroll-x"
             >
               {navItems.map(item => (
                 <button
                   key={item.id}
+                  data-nav-id={item.id}
                   onClick={() => setActiveSection(item.id)}
-                  style={{ flexShrink: 0 }}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
+                  className={`shrink-0 flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
                     activeSection === item.id
                       ? 'text-white bg-[#00C44D]'
                       : 'text-gray-400 hover:text-white hover:bg-white/5'
@@ -772,6 +1034,8 @@ export function MyAccountPage({ onGoHome, onNavigateStatic, initialSection, onOp
           {activeSection === 'limites'            && <Limites />}
           {activeSection === 'seguranca'          && <Seguranca />}
           {activeSection === 'contas-bancarias'   && <ContasBancarias />}
+          {activeSection === 'pausas-suspensoes'  && <PausasSuspensoes onBack={() => setActiveSection('minha-conta')} />}
+          {activeSection === 'imposto-renda'      && <ImpostoRenda onBack={() => setActiveSection('minha-conta')} />}
         </div>
       </div>
 

@@ -8,7 +8,7 @@ export interface Promo {
   id: string;
   tag: string;
   tagColor: string;
-  bannerKey: 'b1' | 'b2' | 'b3';
+  bannerKey: 'b1' | 'b2' | 'b3' | 'b4' | 'b5' | 'b6';
   bannerGradient: string;
   title: string;
   subtitle: string;
@@ -25,7 +25,7 @@ export const promos: Promo[] = [
     id: 'bonus-boas-vindas',
     tag: 'BÔNUS DE BOAS-VINDAS',
     tagColor: '#00C44D',
-    bannerKey: 'b1',
+    bannerKey: 'b2',
     bannerGradient: 'from-[#0a3d1f] to-[#16103D]',
     title: 'Bônus de 100% até R$500',
     subtitle: 'Faça seu primeiro depósito e dobre seu saldo!',
@@ -65,7 +65,7 @@ export const promos: Promo[] = [
     id: 'cashback-semanal',
     tag: 'CASHBACK SEMANAL',
     tagColor: '#D4AF37',
-    bannerKey: 'b2',
+    bannerKey: 'b5',
     bannerGradient: 'from-[#3d2a00] to-[#16103D]',
     title: 'Cashback de 10% Todo Sábado',
     subtitle: 'Receba de volta uma parte do que perdeu!',
@@ -101,7 +101,7 @@ export const promos: Promo[] = [
     id: 'torneios-exclusivos',
     tag: 'TORNEIO',
     tagColor: '#a855f7',
-    bannerKey: 'b3',
+    bannerKey: 'b1',
     bannerGradient: 'from-[#2d0a6b] to-[#16103D]',
     title: 'Torneios Exclusivos',
     subtitle: 'Concorra a prêmios incríveis todos os dias!',
@@ -136,7 +136,7 @@ export const promos: Promo[] = [
     id: 'recarga-segunda',
     tag: 'BÔNUS DE RECARGA',
     tagColor: '#00C44D',
-    bannerKey: 'b1',
+    bannerKey: 'b6',
     bannerGradient: 'from-[#0a3d2a] to-[#16103D]',
     title: 'Recarga de 50% às Segundas',
     subtitle: 'Comece a semana com o dobro de saldo!',
@@ -162,7 +162,7 @@ export const promos: Promo[] = [
     id: 'seguro-esportes',
     tag: 'ESPORTES',
     tagColor: '#3b82f6',
-    bannerKey: 'b2',
+    bannerKey: 'b3',
     bannerGradient: 'from-[#0a1e3d] to-[#16103D]',
     title: 'Seguro de Apostas Esportivas',
     subtitle: 'Aposte com segurança no seu time!',
@@ -187,7 +187,7 @@ export const promos: Promo[] = [
     id: 'jogo-responsavel',
     tag: 'JOGO RESPONSÁVEL',
     tagColor: '#ef4444',
-    bannerKey: 'b3',
+    bannerKey: 'b4',
     bannerGradient: 'from-[#3d0a0a] to-[#16103D]',
     title: 'Jogue com Responsabilidade',
     subtitle: 'Sua saúde vem em primeiro lugar!',

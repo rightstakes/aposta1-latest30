@@ -22,11 +22,10 @@ export function ProvidersSection() {
     <div className="mb-8">
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-white font-semibold text-base sm:text-lg">Provedores</h2>
-        <div className="flex gap-2">
+        <div className="hidden sm:flex gap-2">
           <button
             onClick={() => scroll('left')}
-            className="text-white p-1.5 rounded transition-colors border border-[#00C44D]/40 hover:border-[#00C44D]"
-            style={{ backgroundColor: '#00C44D22' }}
+            className="text-white p-1.5 rounded transition-colors border border-[#00C44D]/40 hover:border-[#00C44D] bg-[#00C44D22]"
             onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#00C44D')}
             onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#00C44D22')}
           >
@@ -34,8 +33,7 @@ export function ProvidersSection() {
           </button>
           <button
             onClick={() => scroll('right')}
-            className="text-white p-1.5 rounded transition-colors border border-[#00C44D]/40 hover:border-[#00C44D]"
-            style={{ backgroundColor: '#00C44D22' }}
+            className="text-white p-1.5 rounded transition-colors border border-[#00C44D]/40 hover:border-[#00C44D] bg-[#00C44D22]"
             onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#00C44D')}
             onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#00C44D22')}
           >

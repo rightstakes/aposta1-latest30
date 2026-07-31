@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { Footer } from '../components/Footer';
 
@@ -79,11 +79,10 @@ function GameRow({ title, games }: { title: string; games: Game[] }) {
     <div className="mb-8">
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-white font-semibold text-base sm:text-lg">{title}</h2>
-        <div className="flex gap-2">
+        <div className="hidden sm:flex gap-2">
           <button
             onClick={() => scroll('left')}
-            className="text-white p-1.5 rounded transition-colors border border-[#00C44D]/40 hover:border-[#00C44D]"
-            style={{ backgroundColor: '#00C44D22' }}
+            className="text-white p-1.5 rounded transition-colors border border-[#00C44D]/40 hover:border-[#00C44D] bg-[#00C44D22]"
             onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#00C44D')}
             onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#00C44D22')}
           >
@@ -91,8 +90,7 @@ function GameRow({ title, games }: { title: string; games: Game[] }) {
           </button>
           <button
             onClick={() => scroll('right')}
-            className="text-white p-1.5 rounded transition-colors border border-[#00C44D]/40 hover:border-[#00C44D]"
-            style={{ backgroundColor: '#00C44D22' }}
+            className="text-white p-1.5 rounded transition-colors border border-[#00C44D]/40 hover:border-[#00C44D] bg-[#00C44D22]"
             onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#00C44D')}
             onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#00C44D22')}
           >
@@ -138,11 +136,19 @@ interface Props {
 export function GameCategoryPage({ page, onNavigateStatic }: Props) {
   const config = PAGE_CONFIG[page];
   const [activeTab, setActiveTab] = useState(0);
+  const tabScrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = tabScrollRef.current;
+    if (!container) return;
+    const activeBtn = container.querySelector<HTMLButtonElement>(`[data-nav-id="${activeTab}"]`);
+    activeBtn?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }, [activeTab]);
 
   return (
     <div className="min-h-screen flex flex-col">
       {/* Sticky filter bar — top-0 because <main> is the scroll container */}
-      <div className="sticky top-0 z-30 bg-[#16103D]">
+      <div className="sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Mobile-only search bar above tabs */}
           <div className="sm:hidden pt-3 pb-2">
@@ -157,10 +163,11 @@ export function GameCategoryPage({ page, onNavigateStatic }: Props) {
           </div>
 
           {/* Tab pills */}
-          <div className="flex items-center gap-2 overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-3 sm:pt-5 sm:pb-3">
+          <div ref={tabScrollRef} className="flex items-center gap-2 overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-3 sm:pt-5 sm:pb-3">
             {config.tabs.map((tab, i) => (
               <button
                 key={i}
+                data-nav-id={i}
                 onClick={() => setActiveTab(i)}
                 className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
                   activeTab === i
