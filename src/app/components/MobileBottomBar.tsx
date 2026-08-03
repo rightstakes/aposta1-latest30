@@ -49,18 +49,15 @@ export function MobileBottomBar({ activePage, onNavigate }: Props) {
             <NavItem key={item.page} item={item} isActive={isItemActive(item.page)} onClick={() => onNavigate(item.page)} />
           ))}
 
-          {/* Centre logo — thin ring, sits inside the bar */}
+          {/* Centre logo — same rotating ring / glow badge as the login page, scaled up to fit this taller bar */}
           <button
             onClick={() => onNavigate('home')}
-            className="relative flex items-center justify-center w-[74px] h-[74px] aspect-square rounded-full flex-shrink-0"
+            className="relative flex items-center justify-center w-[78px] h-[78px] rounded-full flex-shrink-0 hover:opacity-90 transition-opacity"
           >
-            {/* Rotating gradient ring — 2px */}
             <span className="mobile-nav-ring absolute inset-0 rounded-full animate-[spin_4s_linear_infinite]" />
-            {/* Soft pulsing glow — 2px */}
             <span className="mobile-nav-glow absolute inset-0 rounded-full animate-pulse" />
-            {/* Logo circle — inset 2px so only a thin ring shows around it */}
-            <span className="absolute inset-[2px] aspect-square rounded-full bg-[#3d1f8f] border border-[#0a0428] shadow-lg flex items-center justify-center overflow-hidden">
-              <img src={logoImage} alt="Home" className="w-[46px] h-[46px] object-contain -translate-y-[3px]" />
+            <span className="relative w-[67px] h-[67px] rounded-full bg-[#3d1f8f] border-2 border-[#0a0428] shadow-lg flex items-center justify-center overflow-hidden">
+              <img src={logoImage} alt="Home" className="w-[52px] h-[52px] object-contain" style={{ transform: 'translate(-3px, 3px)' }} />
             </span>
           </button>
 

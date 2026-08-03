@@ -69,7 +69,7 @@ export function PromoCards() {
   };
 
   return (
-    <div className="mt-2 mb-2 lg:mt-6 lg:mb-6">
+    <div className="mb-2 lg:mb-6">
       {/* Mobile: 1 banner at a time, finger-scrollable with snap */}
       <div className="lg:hidden">
         <div
