@@ -16,6 +16,7 @@ function figmaAssetResolver() {
 }
 
 export default defineConfig({
+  base: '/aposta1-latest30/',
   plugins: [
     figmaAssetResolver(),
     react(),
