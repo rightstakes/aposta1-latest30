@@ -1,4 +1,4 @@
-import { Bell, ChevronDown, Menu, X, LayoutDashboard, Wallet, Clock, Landmark, ShieldCheck, PauseCircle, Lock, LogOut, RefreshCw } from 'lucide-react';
+import { Bell, ChevronDown, Menu, X, LayoutDashboard, Wallet, Clock, Landmark, ShieldCheck, PauseCircle, Lock, LogOut, RefreshCw, Trophy } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
 interface HeaderProps {
@@ -6,6 +6,7 @@ interface HeaderProps {
   mobileSidebarOpen?: boolean;
   onNavigate?: (page: string) => void;
   onOpenDeposit?: () => void;
+  activePage?: string;
 }
 
 const profileMenuItems = [
@@ -76,7 +77,8 @@ function ProfileDropdown({ compact = false, onNavigate }: { compact?: boolean; o
   );
 }
 
-export function Header({ onToggleSidebar, mobileSidebarOpen, onNavigate, onOpenDeposit }: HeaderProps) {
+export function Header({ onToggleSidebar, mobileSidebarOpen, onNavigate, onOpenDeposit, activePage }: HeaderProps) {
+  const missionsActive = activePage === 'missoes';
   return (
     <header className="bg-[#0b062e] px-4 sm:px-6 flex items-center justify-between fixed top-0 left-0 lg:left-32 right-0 z-50 h-[82px]">
       {/* Left side */}
@@ -126,6 +128,19 @@ export function Header({ onToggleSidebar, mobileSidebarOpen, onNavigate, onOpenD
             Depositar
           </button>
         </div>
+
+        {/* Missões shortcut */}
+        <button
+          onClick={() => onNavigate?.('missoes')}
+          title="Missões"
+          className={`p-2 rounded-xl border transition-colors flex-shrink-0 hidden md:block ${
+            missionsActive
+              ? 'bg-[#D4AF3722] border-[#D4AF37]'
+              : 'bg-white/5 border-white/15 hover:bg-white/10'
+          }`}
+        >
+          <Trophy className={`w-5 h-5 ${missionsActive ? 'text-[#D4AF37]' : 'text-gray-200'}`} />
+        </button>
 
         {/* Mobile profile — shown only up to md */}
         <div className="md:hidden">

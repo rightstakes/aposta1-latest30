@@ -34,6 +34,7 @@ import { ReferPage } from './pages/ReferPage';
 import { TournamentsPage } from './pages/TournamentsPage';
 import { TournamentDetailPage } from './pages/TournamentDetailPage';
 import { RewardsPage } from './pages/RewardsPage';
+import { MissionsPage } from './pages/MissionsPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
@@ -41,7 +42,7 @@ import { NotificationsPage } from './pages/NotificationsPage';
 import { ProvidersSection } from './components/ProvidersSection';
 import { Star, Flame, Clock, Sparkles, Search } from 'lucide-react';
 
-type Page = PageType | 'home' | 'promocoes' | 'minha-conta' | 'bonus' | 'refer' | 'torneios' | 'recompensas' | 'login' | 'cadastro' | 'esqueci-senha' | 'notificacoes';
+type Page = PageType | 'home' | 'promocoes' | 'minha-conta' | 'bonus' | 'refer' | 'torneios' | 'recompensas' | 'missoes' | 'login' | 'cadastro' | 'esqueci-senha' | 'notificacoes';
 
 import imgMrTreasure from '../imports/mr-treasures-fortune-featured.png';
 import imgKnockout from '../imports/Knockout-riches-featured.png';
@@ -184,6 +185,7 @@ export default function App() {
         onNavigate={navigate}
         mobileSidebarOpen={mobileSidebarOpen}
         onOpenDeposit={() => setDepositOpen(true)}
+        activePage={activePage}
       />
 
       <div className="flex-1 pt-[82px]">
@@ -225,6 +227,8 @@ export default function App() {
             <NotificationsPage onNavigateStatic={openStaticPage} />
           ) : activePage === 'recompensas' ? (
             <RewardsPage onNavigateStatic={openStaticPage} />
+          ) : activePage === 'missoes' ? (
+            <MissionsPage onNavigateStatic={openStaticPage} />
           ) : activePage === 'torneios' && selectedTournamentId ? (
             <TournamentDetailPage
               tournamentId={selectedTournamentId}
