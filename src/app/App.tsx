@@ -185,7 +185,6 @@ export default function App() {
         onNavigate={navigate}
         mobileSidebarOpen={mobileSidebarOpen}
         onOpenDeposit={() => setDepositOpen(true)}
-        activePage={activePage}
       />
 
       <div className="flex-1 pt-[82px]">
@@ -228,7 +227,7 @@ export default function App() {
           ) : activePage === 'recompensas' ? (
             <RewardsPage onNavigateStatic={openStaticPage} />
           ) : activePage === 'missoes' ? (
-            <MissionsPage onNavigateStatic={openStaticPage} />
+            <MissionsPage onNavigateStatic={openStaticPage} onNavigate={navigate} />
           ) : activePage === 'torneios' && selectedTournamentId ? (
             <TournamentDetailPage
               tournamentId={selectedTournamentId}

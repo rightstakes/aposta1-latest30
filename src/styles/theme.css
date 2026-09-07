@@ -243,6 +243,13 @@
     transform: rotateY(180deg);
     background: radial-gradient(circle 200px at center 120%, #3d1f8f, #110936);
   }
+  .mission-card-face {
+    backface-visibility: hidden;
+  }
+  .mission-card-back {
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+  }
   .aspect-tournament {
     aspect-ratio: 16/7;
   }

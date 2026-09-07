@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 import { Headphones, LogIn, ChevronDown } from 'lucide-react';
-import { EsportsIcon, JogosIcon, CassinoIcon, SlotsIcon, AviatorIcon, BonusIcon, HomeIcon, PromocoesIcon, RecompensasIcon, ReferIcon } from './icons';
+import { EsportsIcon, JogosIcon, CassinoIcon, SlotsIcon, AviatorIcon, BonusIcon, HomeIcon, PromocoesIcon, MissoesIcon, RecompensasIcon, ReferIcon } from './icons';
 import logoImage from '../../imports/aposta1-logo-new-gold-1.png';
 import type { PageType } from '../pages/GameCategoryPage';
 
-type Page = PageType | 'home' | 'promocoes' | 'bonus' | 'refer' | 'torneios' | 'recompensas' | 'login';
+type Page = PageType | 'home' | 'promocoes' | 'missoes' | 'bonus' | 'refer' | 'torneios' | 'recompensas' | 'login';
 
 const menuItems: { icon: React.ElementType; label: string; page?: Page }[] = [
   { icon: HomeIcon, label: 'Início', page: 'home' },
@@ -14,6 +14,7 @@ const menuItems: { icon: React.ElementType; label: string; page?: Page }[] = [
   { icon: AviatorIcon, label: 'Aviator' },
   { icon: EsportsIcon, label: 'Esportes' },
   { icon: PromocoesIcon, label: 'Promoções', page: 'promocoes' as Page },
+  { icon: MissoesIcon, label: 'Missões', page: 'missoes' as Page },
   { icon: RecompensasIcon,  label: 'Recompensas',    page: 'recompensas' as Page },
   { icon: BonusIcon,   label: 'Bônus',          page: 'bonus' as Page },
   { icon: ReferIcon, label: 'Refer',          page: 'refer' as Page },
