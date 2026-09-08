@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import logoImage from '../../imports/aposta1-logo-new-gold-1.png';
 import { EsportsIcon, JogosIcon, CassinoIcon, SlotsIcon } from './icons';
 import type { PageType } from '../pages/GameCategoryPage';
@@ -33,13 +34,50 @@ function NavItem({ item, isActive, onClick }: { item: (typeof items)[number]; is
   );
 }
 
+// Shrinks the bar while the player scrolls down and restores it on scroll up.
+// Always full size near the top of the page.
+function useShrinkOnScroll() {
+  const [shrunk, setShrunk] = useState(false);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const delta = y - lastY;
+        if (y <= 80) {
+          setShrunk(false);
+          lastY = y;
+        } else if (Math.abs(delta) > 6) {
+          setShrunk(delta > 0);
+          lastY = y;
+        }
+        ticking = false;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return shrunk;
+}
+
 export function MobileBottomBar({ activePage, onNavigate }: Props) {
+  const shrunk = useShrinkOnScroll();
   // 'home' is a placeholder page for Esportes (no dedicated sports page yet) — don't show it
   // as selected just because the app happens to default to the home page on load.
   const isItemActive = (page: Page) => page !== 'home' && activePage === page;
 
   return (
-    <div className="lg:hidden fixed bottom-3 left-3 right-3 z-50">
+    <div
+      className="lg:hidden fixed bottom-3 left-3 right-3 z-50 origin-bottom transition-transform duration-300 ease-out dyn-transform"
+      style={{ '--dyn-transform': shrunk ? 'scale(0.7)' : 'scale(1)' } as React.CSSProperties}
+    >
       <div
         className="mobile-nav-shadow relative rounded-full border border-[#9B2CF1] backdrop-blur-xl px-3 bg-[#3D1F8FE6]"
       >
@@ -56,7 +94,7 @@ export function MobileBottomBar({ activePage, onNavigate }: Props) {
           >
             <span className="mobile-nav-ring absolute inset-0 rounded-full animate-[spin_4s_linear_infinite]" />
             <span className="mobile-nav-glow absolute inset-0 rounded-full animate-pulse" />
-            <span className="relative w-[67px] h-[67px] rounded-full bg-[#3d1f8f] border-2 border-[#0a0428] shadow-lg flex items-center justify-center overflow-hidden">
+            <span className="relative w-[67px] h-[67px] rounded-full bg-[#3d1f8f] border border-[#0a0428] shadow-lg flex items-center justify-center overflow-hidden">
               <img src={logoImage} alt="Home" className="w-[52px] h-[52px] object-contain" style={{ transform: 'translate(-3px, 3px)' }} />
             </span>
           </button>

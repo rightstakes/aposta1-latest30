@@ -39,7 +39,7 @@ function ProfileDropdown({ compact = false, onNavigate }: { compact?: boolean; o
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(prev => !prev)}
-        className="flex items-center gap-2 bg-white/5 px-2 sm:px-3 py-2 sm:py-2.5 rounded-xl hover:bg-white/10 border border-white/15 h-full"
+        className="flex items-center gap-1.5 sm:gap-2 bg-white/5 px-1.5 sm:px-3 py-1.5 sm:py-2.5 rounded-xl hover:bg-white/10 border border-white/15 h-full"
       >
         <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-semibold flex-shrink-0">
           GA
@@ -50,7 +50,10 @@ function ProfileDropdown({ compact = false, onNavigate }: { compact?: boolean; o
             <div className="text-gray-400 text-xs">Anônimo</div>
           </div>
         )}
-        <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 transition-transform flex-shrink-0 ${open ? 'rotate-180' : ''}`} />
+        {/* Arrow is dropped on the compact (mobile) dropdown to save width */}
+        {!compact && (
+          <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 transition-transform flex-shrink-0 ${open ? 'rotate-180' : ''}`} />
+        )}
       </button>
 
       {open && (
@@ -112,17 +115,17 @@ export function Header({ onToggleSidebar, mobileSidebarOpen, onNavigate, onOpenD
         </button>
 
         {/* Depositar box */}
-        <div className="bg-white/5 px-3 sm:px-3 md:px-4 py-2 sm:py-2.5 rounded-xl flex items-center gap-2 sm:gap-3 border border-white/15">
+        <div className="bg-white/5 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2.5 rounded-xl flex items-center gap-1.5 sm:gap-3 border border-white/15">
           <RefreshCw className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 text-[#D4AF37]" />
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[#D4AF37] text-xs sm:text-sm md:text-base font-semibold leading-none">
+          <div className="flex flex-col gap-0.5 flex-shrink-0">
+            <span className="text-[#D4AF37] text-xs sm:text-sm md:text-base font-semibold leading-none whitespace-nowrap">
               R$ 1,200.00
             </span>
-            <span className="text-white text-[9px] sm:text-[10px] md:text-[11px] font-normal leading-none">
+            <span className="text-white text-[9px] sm:text-[10px] md:text-[11px] font-normal leading-none whitespace-nowrap">
               Bônus: R$3000
             </span>
           </div>
-          <button onClick={onOpenDeposit} className="bg-green-500 hover:bg-green-600 text-white px-4 sm:px-4 md:px-5 py-2 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold flex-shrink-0">
+          <button onClick={onOpenDeposit} className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold flex-shrink-0 whitespace-nowrap">
             Depositar
           </button>
         </div>

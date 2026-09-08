@@ -152,8 +152,25 @@
     box-shadow: 0 10px 30px 4px rgba(0, 0, 0, 0.65);
   }
 
+  /* Gold ring: a constant faint ring keeps the badge reading as a perfect
+     circle at all times, with a brighter arc sweeping over it. Both layers are
+     masked to a true 4px annulus (`circle` is explicit so it can never resolve
+     to an ellipse), so thickness stays even all the way round. Fades use rgba
+     gold rather than `transparent`, which interpolates through grey and
+     dirties the arc. */
   .mobile-nav-ring {
-    background: conic-gradient(from 0deg, transparent 0%, #D4AF37 18%, transparent 28%, transparent 100%);
+    background-image:
+      conic-gradient(
+        from 0deg,
+        rgba(212, 175, 55, 0) 0deg,
+        #D4AF37 55deg,
+        #F3D98B 90deg,
+        rgba(212, 175, 55, 0) 135deg,
+        rgba(212, 175, 55, 0) 360deg
+      ),
+      linear-gradient(rgba(212, 175, 55, 0.28), rgba(212, 175, 55, 0.28));
+    -webkit-mask: radial-gradient(circle farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+    mask: radial-gradient(circle farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
   }
 
   .mobile-nav-glow {

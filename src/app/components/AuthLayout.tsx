@@ -20,7 +20,7 @@ export function AuthLayout({ children, onGoHome }: Props) {
         >
           <span className="mobile-nav-ring absolute inset-0 rounded-full animate-[spin_4s_linear_infinite]" />
           <span className="mobile-nav-glow absolute inset-0 rounded-full animate-pulse" />
-          <span className="relative w-[67px] h-[67px] rounded-full bg-[#3d1f8f] border-2 border-[#0a0428] shadow-lg flex items-center justify-center overflow-hidden">
+          <span className="relative w-[67px] h-[67px] rounded-full bg-[#3d1f8f] border border-[#0a0428] shadow-lg flex items-center justify-center overflow-hidden">
             <img src={logoImage} alt="APOSTA1" className="w-[52px] h-[52px] object-contain" style={{ transform: 'translate(-3px, 3px)' }} />
           </span>
         </button>
