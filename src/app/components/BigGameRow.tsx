@@ -68,7 +68,7 @@ export function BigGameRow({ title, icon, games, liveTag }: BigGameRowProps) {
         {games.map((game, index) => (
           <button
             key={index}
-            className="rounded-lg overflow-hidden group hover:scale-105 hover:shadow-xl hover:shadow-purple-500/30 transition-all flex-shrink-0 w-[23vw] sm:w-[calc(20%-12.8px)] relative"
+            className="rounded-lg overflow-hidden group hover:scale-105 hover:shadow-xl hover:shadow-purple-500/30 transition-all shrink-0 w-[23vw] sm:w-[calc(20%-12.8px)] relative"
           >
             <div className="aspect-[3/4] relative overflow-hidden">
               <img

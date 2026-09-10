@@ -73,7 +73,7 @@ export function PromotionsPage({ onOpenPromo, onNavigateStatic }: Props) {
                 key={tab.value}
                 data-nav-id={tab.value}
                 onClick={() => setActiveTab(tab.value)}
-                className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
                   activeTab === tab.value ? 'text-white' : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
                 }`}
                 style={activeTab === tab.value ? { backgroundColor: '#00C44D' } : {}}

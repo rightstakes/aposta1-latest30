@@ -60,7 +60,7 @@ export function LoginPage({ onNavigate }: Props) {
             />
             {errors.email && (
               <p className="flex items-center gap-1.5 text-red-400 text-xs mt-1.5">
-                <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                 {errors.email}
               </p>
             )}
@@ -86,7 +86,7 @@ export function LoginPage({ onNavigate }: Props) {
             </div>
             {errors.password && (
               <p className="flex items-center gap-1.5 text-red-400 text-xs mt-1.5">
-                <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                 {errors.password}
               </p>
             )}

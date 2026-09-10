@@ -90,7 +90,7 @@ export function MobileBottomBar({ activePage, onNavigate }: Props) {
           {/* Centre logo — same rotating ring / glow badge as the login page, scaled up to fit this taller bar */}
           <button
             onClick={() => onNavigate('home')}
-            className="relative flex items-center justify-center w-[78px] h-[78px] rounded-full flex-shrink-0 hover:opacity-90 transition-opacity"
+            className="relative flex items-center justify-center w-[78px] h-[78px] rounded-full shrink-0 hover:opacity-90 transition-opacity"
           >
             <span className="mobile-nav-ring absolute inset-0 rounded-full animate-[spin_4s_linear_infinite]" />
             <span className="mobile-nav-glow absolute inset-0 rounded-full animate-pulse" />

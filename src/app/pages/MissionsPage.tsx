@@ -224,17 +224,17 @@ function DetailSection({
   icon: React.ElementType; label: string; expanded: boolean; onToggle: () => void; children: React.ReactNode;
 }) {
   return (
-    <div className="flex-shrink-0">
+    <div className="shrink-0">
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-xl dyn-bg"
         style={{ '--dyn-bg': ROW_BG } as React.CSSProperties}
       >
         <span className="flex items-center gap-2.5 text-white text-[13px] font-medium">
-          <Icon className="w-4 h-4 flex-shrink-0 dyn-text" style={{ '--dyn-text': ICON_PURPLE } as React.CSSProperties} />
+          <Icon className="w-4 h-4 shrink-0 dyn-text" style={{ '--dyn-text': ICON_PURPLE } as React.CSSProperties} />
           {label}
         </span>
-        <ChevronDown className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform ${expanded ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-4 h-4 text-gray-400 shrink-0 transition-transform ${expanded ? 'rotate-180' : ''}`} />
       </button>
       {expanded && (
         <div className="px-3.5 pt-2 pb-1 text-gray-400 text-xs leading-snug space-y-1.5">
@@ -453,7 +453,7 @@ function MissionCard({
               </div>
               <button
                 onClick={() => setFlipped(false)}
-                className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-colors flex-shrink-0"
+                className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-colors shrink-0"
               >
                 <RotateCcw className="w-3 h-3" /> Voltar
               </button>
@@ -491,7 +491,7 @@ function MissionCard({
             </div>
 
             {/* Same main CTA as the front, reflecting the current state */}
-            <div className="flex-shrink-0 pt-1">
+            <div className="shrink-0 pt-1">
               <MissionCta
                 mission={mission}
                 accepting={accepting}
@@ -586,7 +586,7 @@ export function MissionsPage({ onNavigateStatic, onNavigate }: Props) {
       <div className="bg-gradient-to-r from-[#1a1147] via-[#2d1569] to-[#1a1147] border-b border-white/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#D4AF3722]">
+            <div className="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center bg-[#D4AF3722]">
               <Trophy className="w-5 h-5 text-[#D4AF37]" />
             </div>
             <div>
@@ -598,7 +598,7 @@ export function MissionsPage({ onNavigateStatic, onNavigate }: Props) {
       </div>
 
       {/* Tabs */}
-      <div className="sticky top-0 z-30 mt-[10px]">
+      <div className="sticky top-[82px] z-30 mt-[10px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex gap-2 overflow-x-auto [scrollbar-width:none]">
           {TABS.map(t => {
             const active = tab === t.key;

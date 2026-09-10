@@ -78,7 +78,7 @@ export function RegisterPage({ onNavigate }: Props) {
   const fieldError = (msg?: string) =>
     msg ? (
       <p className="flex items-center gap-1.5 text-red-400 text-xs mt-1.5">
-        <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+        <AlertCircle className="w-3.5 h-3.5 shrink-0" />
         {msg}
       </p>
     ) : null;
@@ -150,7 +150,7 @@ export function RegisterPage({ onNavigate }: Props) {
                 type="checkbox"
                 checked={agreed}
                 onChange={e => { setAgreed(e.target.checked); clearError('agreed'); }}
-                className="w-4 h-4 mt-0.5 rounded border-white/20 bg-white/5 accent-[#00C44D] flex-shrink-0"
+                className="w-4 h-4 mt-0.5 rounded border-white/20 bg-white/5 accent-[#00C44D] shrink-0"
               />
               <span>
                 Confirmo que tenho mais de 18 anos e aceito os{' '}

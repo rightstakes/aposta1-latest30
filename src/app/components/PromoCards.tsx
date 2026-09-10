@@ -82,7 +82,7 @@ export function PromoCards() {
           className="flex overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         >
           {banners.map((banner) => (
-            <div key={banner.id} className="w-full flex-shrink-0 snap-center">
+            <div key={banner.id} className="w-full shrink-0 snap-center">
               <img
                 src={banner.image}
                 alt={banner.alt}
@@ -124,7 +124,7 @@ export function PromoCards() {
             } as React.CSSProperties}
           >
             {banners.map((banner) => (
-              <div key={banner.id} className="w-1/2 flex-shrink-0 px-2">
+              <div key={banner.id} className="w-1/2 shrink-0 px-2">
                 <img
                   src={banner.image}
                   alt={banner.alt}

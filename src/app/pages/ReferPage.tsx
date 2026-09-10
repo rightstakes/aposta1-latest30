@@ -88,7 +88,7 @@ export function ReferPage({ onNavigateStatic }: Props) {
                 </div>
                 <button
                   onClick={copyLink}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white hover:opacity-90 flex-shrink-0 bg-[#00C44D]"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white hover:opacity-90 shrink-0 bg-[#00C44D]"
                 >
                   {copied ? <CheckCheck className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                   {copied ? 'Copiado!' : 'Copiar'}
@@ -139,20 +139,20 @@ export function ReferPage({ onNavigateStatic }: Props) {
                 const StatusIcon = cfg.icon;
                 return (
                   <div key={i} className="flex items-center gap-4 px-5 py-3.5">
-                    <div className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0 dyn-bg dyn-border-full"
+                    <div className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0 dyn-bg dyn-border-full"
                       style={{ '--dyn-bg': r.color + '25', '--dyn-border-full': `1.5px solid ${r.color}40` } as React.CSSProperties}>
                       {r.initial}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-white text-sm font-medium">{r.name}</p>
                       <div className="flex items-center gap-1.5 mt-0.5">
-                        <StatusIcon className="w-3 h-3 flex-shrink-0 dyn-text" style={{ '--dyn-text': cfg.color } as React.CSSProperties} />
+                        <StatusIcon className="w-3 h-3 shrink-0 dyn-text" style={{ '--dyn-text': cfg.color } as React.CSSProperties} />
                         <span className="text-xs dyn-text" style={{ '--dyn-text': cfg.color } as React.CSSProperties}>{r.status}</span>
                         <span className="text-gray-600 text-xs">· {r.date}</span>
                       </div>
                     </div>
                     {r.earnings && (
-                      <span className="text-sm font-bold flex-shrink-0 text-[#00C44D]">{r.earnings}</span>
+                      <span className="text-sm font-bold shrink-0 text-[#00C44D]">{r.earnings}</span>
                     )}
                   </div>
                 );
@@ -170,7 +170,7 @@ export function ReferPage({ onNavigateStatic }: Props) {
               <div className="p-5 space-y-4">
                 {steps.map((step, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 bg-[#00C44D15]">
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 bg-[#00C44D15]">
                       <step.icon className="w-4 h-4 text-[#00C44D]" />
                     </div>
                     <div>
@@ -194,7 +194,7 @@ export function ReferPage({ onNavigateStatic }: Props) {
               <div className="p-5 space-y-3">
                 {rules.map((rule, i) => (
                   <div key={i} className="flex items-start gap-3 text-xs text-gray-400 leading-relaxed">
-                    <span className="w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center text-[9px] font-bold text-white mt-0.5 bg-[#00C44D]">
+                    <span className="w-4 h-4 rounded-full shrink-0 flex items-center justify-center text-[9px] font-bold text-white mt-0.5 bg-[#00C44D]">
                       {i + 1}
                     </span>
                     {rule}

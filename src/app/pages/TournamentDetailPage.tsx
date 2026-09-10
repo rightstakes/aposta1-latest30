@@ -80,7 +80,7 @@ const placeLabels = ['🥇', '🥈', '🥉'];
 // ─── Small game card for carousel ─────────────────────────────────────────────
 function GameChip({ title, image }: { title: string; image: string }) {
   return (
-    <div className="flex-shrink-0 w-28 rounded-xl overflow-hidden border border-white/10 hover:border-white/20 transition-colors cursor-pointer">
+    <div className="shrink-0 w-28 rounded-xl overflow-hidden border border-white/10 hover:border-white/20 transition-colors cursor-pointer">
       <div className="aspect-[3/4] relative overflow-hidden">
         <img src={image} alt={title} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
@@ -95,7 +95,7 @@ function MiniTournamentCard({ t, onDetail }: { t: Tournament; onDetail: () => vo
   const finished = t.status === 'finished';
   return (
     <div
-      className={`flex-shrink-0 w-72 rounded-2xl overflow-hidden border flex flex-col transition-all tournament-card-bg ${
+      className={`shrink-0 w-72 rounded-2xl overflow-hidden border flex flex-col transition-all tournament-card-bg ${
         finished ? 'border-white/15 opacity-65' : 'border-white/10 hover:border-[#D4AF37]/30'
       }`}
     >
@@ -232,8 +232,8 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex overflow-x-auto [scrollbar-width:none] divide-x divide-white/5">
             {summaryItems.map(item => (
-              <div key={item.label} className="flex items-center gap-3 px-5 py-4 flex-shrink-0">
-                <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-[#D4AF3718]">
+              <div key={item.label} className="flex items-center gap-3 px-5 py-4 shrink-0">
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 bg-[#D4AF3718]">
                   <item.icon className="w-3.5 h-3.5 text-[#D4AF37]" />
                 </div>
                 <div>
@@ -243,8 +243,8 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
                 </div>
               </div>
             ))}
-            <div className="flex items-center gap-3 px-5 py-4 flex-shrink-0">
-              <Users className="w-4 h-4 flex-shrink-0 text-[#D4AF37]" />
+            <div className="flex items-center gap-3 px-5 py-4 shrink-0">
+              <Users className="w-4 h-4 shrink-0 text-[#D4AF37]" />
               <div>
                 <p className="text-gray-500 text-[10px] uppercase tracking-wide">Participantes</p>
                 <p className="text-white text-sm font-semibold">{t.participants.toLocaleString('pt-BR')}</p>
@@ -281,7 +281,7 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
                       } : {}}
                     >
                       {/* Position */}
-                      <div className="w-7 flex-shrink-0 text-center">
+                      <div className="w-7 shrink-0 text-center">
                         {row.pos <= 3
                           ? <span className="text-lg">{placeLabels[row.pos - 1]}</span>
                           : <span className="text-gray-500 text-sm font-bold">{row.pos}</span>}
@@ -289,7 +289,7 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
 
                       {/* Avatar */}
                       <div
-                        className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 dyn-bg dyn-border-full"
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 dyn-bg dyn-border-full"
                         style={{ '--dyn-bg': row.isMe ? '#D4AF3733' : '#ffffff15', '--dyn-border-full': row.isMe ? '1.5px solid #D4AF37' : '1.5px solid #ffffff20' } as React.CSSProperties}
                       >
                         {row.user.slice(0, 2).toUpperCase()}
@@ -302,14 +302,14 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
                             {row.user}
                           </p>
                           {row.isMe && (
-                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full text-black flex-shrink-0 bg-[#D4AF37]">Você</span>
+                            <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full text-black shrink-0 bg-[#D4AF37]">Você</span>
                           )}
                         </div>
                         <p className="text-gray-500 text-xs">{row.score}</p>
                       </div>
 
                       {/* Prize */}
-                      <p className="text-sm font-bold flex-shrink-0 dyn-text" style={{ '--dyn-text': row.pos <= 3 ? medalColors[row.pos - 1] : '#6b7280' } as React.CSSProperties}>
+                      <p className="text-sm font-bold shrink-0 dyn-text" style={{ '--dyn-text': row.pos <= 3 ? medalColors[row.pos - 1] : '#6b7280' } as React.CSSProperties}>
                         {row.amount}
                       </p>
                     </div>
@@ -405,7 +405,7 @@ export function TournamentDetailPage({ tournamentId, onBack, onSelectTournament,
                     {t.rules.map((rule, i) => (
                       <div key={i} className="flex items-start gap-3">
                         <span
-                          className="w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center text-[9px] font-bold text-white mt-0.5 bg-[#D4AF37]"
+                          className="w-4 h-4 rounded-full shrink-0 flex items-center justify-center text-[9px] font-bold text-white mt-0.5 bg-[#D4AF37]"
                         >
                           {i + 1}
                         </span>

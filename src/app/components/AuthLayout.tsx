@@ -16,7 +16,7 @@ export function AuthLayout({ children, onGoHome }: Props) {
             overlapping the card 50% inside / 50% outside */}
         <button
           onClick={onGoHome}
-          className="absolute left-1/2 -translate-x-1/2 -top-[39px] z-20 flex items-center justify-center w-[78px] h-[78px] rounded-full flex-shrink-0 hover:opacity-90 transition-opacity"
+          className="absolute left-1/2 -translate-x-1/2 -top-[39px] z-20 flex items-center justify-center w-[78px] h-[78px] rounded-full shrink-0 hover:opacity-90 transition-opacity"
         >
           <span className="mobile-nav-ring absolute inset-0 rounded-full animate-[spin_4s_linear_infinite]" />
           <span className="mobile-nav-glow absolute inset-0 rounded-full animate-pulse" />

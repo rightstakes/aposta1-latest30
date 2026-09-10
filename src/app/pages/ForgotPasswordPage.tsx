@@ -60,7 +60,7 @@ export function ForgotPasswordPage({ onNavigate }: Props) {
               />
               {error && (
                 <p className="flex items-center gap-1.5 text-red-400 text-xs mt-1.5">
-                  <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   {error}
                 </p>
               )}

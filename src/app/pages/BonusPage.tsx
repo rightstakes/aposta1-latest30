@@ -218,7 +218,7 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
                 <p className="text-gray-400 text-xs leading-relaxed">{bonus.description}</p>
               </div>
               {/* Right: emoji + Rules button stacked */}
-              <div className="flex flex-col items-center gap-2 flex-shrink-0">
+              <div className="flex flex-col items-center gap-2 shrink-0">
                 <div
                   className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl dyn-bg-full dyn-border-full"
                   style={{ '--dyn-bg-full': bonus.accentColor + '20', '--dyn-border-full': `1px solid ${bonus.accentColor}30` } as React.CSSProperties}
@@ -248,7 +248,7 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="bg-white/8 rounded-xl px-3 py-2.5 flex flex-col gap-1 border border-white/15">
                   <div className="flex items-center gap-1">
-                    <Icon className="w-3 h-3 flex-shrink-0 dyn-text" style={{ '--dyn-text': bonus.accentColor } as React.CSSProperties} />
+                    <Icon className="w-3 h-3 shrink-0 dyn-text" style={{ '--dyn-text': bonus.accentColor } as React.CSSProperties} />
                     <p className="text-[9px] text-gray-300 uppercase tracking-wide">{label}</p>
                   </div>
                   <p className="text-white text-xs font-semibold truncate">{value}</p>
@@ -308,7 +308,7 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
             <ul className="space-y-2.5 flex-1 min-h-0 overflow-y-auto [scrollbar-width:none]">
               {bonus.rules.map((rule, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-xs text-gray-400 leading-relaxed">
-                  <span className="w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center text-[9px] font-bold text-white mt-0.5 bg-[#00C44D]">
+                  <span className="w-4 h-4 rounded-full shrink-0 flex items-center justify-center text-[9px] font-bold text-white mt-0.5 bg-[#00C44D]">
                     {i + 1}
                   </span>
                   {rule}
@@ -342,7 +342,7 @@ export function BonusPage({ onNavigateStatic, onOpenDeposit }: Props) {
           <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] py-3 sm:pt-5 sm:pb-3">
             {SECTIONS.map(s => (
               <a key={s.key} href={`#${s.key}`}
-                className="flex-shrink-0 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-medium bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
+                className="shrink-0 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-medium bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
                 <s.icon className="w-3.5 h-3.5 dyn-text" style={{ '--dyn-text': s.color } as React.CSSProperties} />
                 {s.label}
               </a>

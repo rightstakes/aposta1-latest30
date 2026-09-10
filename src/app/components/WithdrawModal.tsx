@@ -130,7 +130,7 @@ export function WithdrawModal({ onClose }: Props) {
                 <label className="text-gray-400 text-xs mb-2 block">Chave PIX para recebimento</label>
                 <div className="flex gap-2">
                   {/* Key type dropdown */}
-                  <div className="relative flex-shrink-0">
+                  <div className="relative shrink-0">
                     <button
                       onClick={() => setDropOpen(p => !p)}
                       className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm min-w-[130px] justify-between hover:border-white/20 transition-colors"
@@ -161,7 +161,7 @@ export function WithdrawModal({ onClose }: Props) {
               {/* Warning box */}
               <div className="rounded-xl border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-4 space-y-2">
                 <div className="flex gap-2">
-                  <AlertTriangle className="w-4 h-4 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+                  <AlertTriangle className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
                   <div className="text-xs text-gray-300 space-y-1.5">
                     <p>Saques para contas bancárias de terceiros serão <strong className="text-white">rejeitados</strong>.</p>
                     <p>O saque será processado para sua conta em até <strong className="text-white">10 minutos</strong>.</p>

@@ -211,36 +211,21 @@ function CashbackCard({ r }: { r: CashbackReward }) {
           </p>
         </div>
 
-        {/* Meta */}
-        <div className="grid grid-cols-2 gap-2 mb-4">
-          {[
-            { label: 'Nível alcançado',   value: r.tier },
-            { label: 'Cashback aplicado', value: `${r.percentage}%` },
-            { label: 'Disponível desde',  value: r.availableSince },
-          ].map(m => (
-            <div key={m.label} className="bg-white/4 rounded-xl px-3 py-2 border border-white/15">
-              <p className="text-gray-500 text-[9px] uppercase tracking-wide">{m.label}</p>
-              <p className="text-white text-xs font-semibold mt-0.5">{m.value}</p>
+        {/* Expiration */}
+        {r.status === 'available' && (
+          <div className="rounded-xl px-3 py-2 mb-4 border flex items-center justify-between bg-[#00C44D0e] border-[#00C44D30]">
+            <div className="flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 shrink-0 text-[#00C44D]" />
+              <p className="text-[9px] uppercase tracking-wide text-[#00C44D]">Expira em</p>
             </div>
-          ))}
-
-          {/* Countdown cell — spans full width */}
-          {r.status === 'available' && (
-            <div className="col-span-2 rounded-xl px-3 py-2 border flex items-center justify-between bg-[#00C44D0e] border-[#00C44D30]">
-              <div className="flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 flex-shrink-0 text-[#00C44D]" />
-                <p className="text-[9px] uppercase tracking-wide text-[#00C44D]">Expira em</p>
-              </div>
-              <p className="font-bold text-sm font-mono text-[#00C44D]">{countdown}</p>
-            </div>
-          )}
-          {r.status === 'finished' && (
-            <div className="bg-white/4 rounded-xl px-3 py-2 border border-white/15">
-              <p className="text-gray-500 text-[9px] uppercase tracking-wide">Data</p>
-              <p className="text-white text-xs font-semibold mt-0.5">{r.expiry}</p>
-            </div>
-          )}
-        </div>
+            <p className="font-bold text-sm font-mono text-[#00C44D]">{countdown}</p>
+          </div>
+        )}
+        {r.status === 'finished' && (
+          <div className="mb-4">
+            <ExpiryChip label={r.expiry} />
+          </div>
+        )}
 
         {/* CTA */}
         {r.status === 'available' && !claimed && (
@@ -610,12 +595,31 @@ export function RewardsPage({ onNavigateStatic }: Props) {
   const [tab, setTab] = useState<Tab>('available');
   const [filter, setFilter] = useState<Filter>('all');
   const filterScrollRef = useRef<HTMLDivElement>(null);
+  const tabScrollRef = useRef<HTMLDivElement>(null);
+
+  // Keep the selected tab visible by scrolling the tab strip itself, never the page.
+  useEffect(() => {
+    const container = tabScrollRef.current;
+    if (!container) return;
+    const activeBtn = container.querySelector<HTMLButtonElement>(`[data-tab-id="${tab}"]`);
+    if (!activeBtn) return;
+    container.scrollTo({
+      left: activeBtn.offsetLeft - (container.clientWidth - activeBtn.clientWidth) / 2,
+      behavior: 'smooth',
+    });
+  }, [tab]);
 
   useEffect(() => {
     const container = filterScrollRef.current;
     if (!container) return;
     const activeBtn = container.querySelector<HTMLButtonElement>(`[data-nav-id="${filter}"]`);
-    activeBtn?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    if (!activeBtn) return;
+    // Scroll only this strip. scrollIntoView() walks up every scrollable
+    // ancestor including the document, which drags the whole page sideways.
+    container.scrollTo({
+      left: activeBtn.offsetLeft - (container.clientWidth - activeBtn.clientWidth) / 2,
+      behavior: 'smooth',
+    });
   }, [filter]);
 
   const tabStatus: Record<Tab, RewardStatus> = {
@@ -633,14 +637,17 @@ export function RewardsPage({ onNavigateStatic }: Props) {
   const totalActive = rewards.filter(r => r.status === 'active').length;
 
   return (
-    <div className="min-h-screen flex flex-col">
+    // overflow-x-clip (not -hidden) guards against any child widening the page
+    // sideways, without turning this into a scroll container and breaking the
+    // sticky tab bar below.
+    <div className="min-h-screen flex flex-col overflow-x-clip">
 
       {/* Hero strip */}
       <div className="bg-gradient-to-r from-[#1a1147] via-[#2d1569] to-[#1a1147] border-b border-white/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#D4AF3722]">
+              <div className="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center bg-[#D4AF3722]">
                 <Star className="w-5 h-5 text-[#D4AF37]" />
               </div>
               <div>
@@ -658,18 +665,18 @@ export function RewardsPage({ onNavigateStatic }: Props) {
         </div>
       </div>
 
-      {/* Sticky tabs + filters */}
-      <div className="sticky top-0 z-30 border-b border-white/15">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      {/* Sticky tabs + filters — offset by the fixed 82px header */}
+      <div className="sticky top-[82px] z-30 border-b border-white/15 bg-[#16103D]/95 backdrop-blur">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-3">
 
           {/* Tabs */}
-          <div className="flex border-b border-white/15">
+          <div ref={tabScrollRef} className="flex border-b border-white/15 overflow-x-auto [scrollbar-width:none]">
             {TABS.map(t => {
               const cnt = t.count(rewards);
               const active = tab === t.key;
               return (
-                <button key={t.key} onClick={() => setTab(t.key)}
-                  className={`flex items-center gap-2 px-5 py-3.5 text-sm font-semibold border-b-2 transition-colors flex-shrink-0 dyn-border ${active ? 'text-white' : 'text-gray-400 hover:text-white border-transparent'}`} style={{ '--dyn-border': active ? '#D4AF37' : 'transparent' } as React.CSSProperties}>
+                <button key={t.key} data-tab-id={t.key} onClick={() => setTab(t.key)}
+                  className={`flex items-center gap-1.5 sm:gap-2 px-2 sm:px-5 py-3.5 text-[13px] sm:text-sm font-semibold border-b-2 transition-colors shrink-0 whitespace-nowrap dyn-border ${active ? 'text-white' : 'text-gray-400 hover:text-white border-transparent'}`} style={{ '--dyn-border': active ? '#D4AF37' : 'transparent' } as React.CSSProperties}>
                   {t.label}
                   {cnt > 0 && (
                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center dyn-bg dyn-text" style={{ '--dyn-bg': active ? '#D4AF37' : '#ffffff18', '--dyn-text': active ? '#000' : '#9ca3af' } as React.CSSProperties}>
@@ -682,7 +689,7 @@ export function RewardsPage({ onNavigateStatic }: Props) {
           </div>
 
           {/* Filter pills */}
-          <div ref={filterScrollRef} className="flex gap-2 py-2.5 overflow-x-auto [scrollbar-width:none]">
+          <div ref={filterScrollRef} className="flex gap-2 py-4 overflow-x-auto [scrollbar-width:none]">
             {FILTERS.map(f => {
               const active = filter === f.key;
               const typeCfg = f.key !== 'all' ? BADGE_MAP[f.key as RewardType] : null;

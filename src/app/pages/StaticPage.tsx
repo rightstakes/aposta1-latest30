@@ -73,7 +73,7 @@ export function StaticPage({ page, onGoHome, onNavigate }: Props) {
                   <ul key={i} className="space-y-2 pl-1">
                     {block.items?.map((item, j) => (
                       <li key={j} className="flex items-start gap-2 text-sm sm:text-base text-gray-400">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 dyn-bg" style={{ '--dyn-bg': accent } as React.CSSProperties} />
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 dyn-bg" style={{ '--dyn-bg': accent } as React.CSSProperties} />
                         {item}
                       </li>
                     ))}
@@ -85,7 +85,7 @@ export function StaticPage({ page, onGoHome, onNavigate }: Props) {
                   <ol key={i} className="space-y-2 pl-1">
                     {block.items?.map((item, j) => (
                       <li key={j} className="flex items-start gap-3 text-sm sm:text-base text-gray-400">
-                        <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white mt-0.5 dyn-bg" style={{ '--dyn-bg': accent } as React.CSSProperties}>
+                        <span className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white mt-0.5 dyn-bg" style={{ '--dyn-bg': accent } as React.CSSProperties}>
                           {j + 1}
                         </span>
                         {item}

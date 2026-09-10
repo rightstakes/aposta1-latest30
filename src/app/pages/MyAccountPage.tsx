@@ -69,7 +69,7 @@ function MinhaConta({ onOpenDeposit, onOpenWithdraw }: { onOpenDeposit?: () => v
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {stats.map(s => (
           <div key={s.label} className="bg-[#1a1147] rounded-xl p-4 border border-white/15 flex items-start gap-3">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 dyn-bg" style={{ '--dyn-bg': s.color + '22' } as React.CSSProperties}>
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 dyn-bg" style={{ '--dyn-bg': s.color + '22' } as React.CSSProperties}>
               <s.icon className="w-4 h-4 dyn-text" style={{ '--dyn-text': s.color } as React.CSSProperties} />
             </div>
             <div className="min-w-0">
@@ -183,7 +183,7 @@ function MinhaConta({ onOpenDeposit, onOpenWithdraw }: { onOpenDeposit?: () => v
                 { label: 'Selfie com Documento', done: false },
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
-                  <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 border ${item.done ? 'border-[#00C44D] bg-[#00C44D]' : 'border-white/20 bg-white/5'}`}>
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 border ${item.done ? 'border-[#00C44D] bg-[#00C44D]' : 'border-white/20 bg-white/5'}`}>
                     {item.done && <span className="text-white text-[10px]">✓</span>}
                   </div>
                   <span className="text-gray-400 text-xs">{item.label}</span>
@@ -246,14 +246,14 @@ function DateFilter({ from, to, onFrom, onTo }: { from: string; to: string; onFr
   return (
     <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 mb-4 pb-4 border-b border-white/15">
       <div className="flex items-center gap-2">
-        <CalendarDays className="w-4 h-4 text-gray-400 flex-shrink-0 hidden sm:block" />
-        <label className="text-gray-500 text-xs flex-shrink-0">De</label>
+        <CalendarDays className="w-4 h-4 text-gray-400 shrink-0 hidden sm:block" />
+        <label className="text-gray-500 text-xs shrink-0">De</label>
         <input type="date" value={from} onChange={e => onFrom(e.target.value)} className={dateInputCls} />
       </div>
       <div className="flex items-center gap-2">
-        <label className="text-gray-500 text-xs flex-shrink-0">Até</label>
+        <label className="text-gray-500 text-xs shrink-0">Até</label>
         <input type="date" value={to} onChange={e => onTo(e.target.value)} className={dateInputCls} />
-        <button className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white hover:opacity-90 flex-shrink-0 bg-[#00C44D]">
+        <button className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white hover:opacity-90 shrink-0 bg-[#00C44D]">
           Filtrar
         </button>
       </div>
@@ -388,7 +388,7 @@ function Apostas() {
         <div className="flex border-b border-white/15 overflow-x-auto [scrollbar-width:none]">
           {tabs.map(t => (
             <button key={t} onClick={() => { setTab(t); setPage(1); }}
-              className={`flex-shrink-0 px-5 py-3 text-sm font-medium capitalize transition-colors ${tab === t ? 'text-white border-b-2 border-[#00C44D]' : 'text-gray-400 hover:text-white'}`}>
+              className={`shrink-0 px-5 py-3 text-sm font-medium capitalize transition-colors ${tab === t ? 'text-white border-b-2 border-[#00C44D]' : 'text-gray-400 hover:text-white'}`}>
               {t.charAt(0).toUpperCase() + t.slice(1)}
             </button>
           ))}
@@ -445,7 +445,7 @@ function Limites() {
   return (
     <div className="space-y-3">
       <div className="bg-[#1a1147] rounded-xl p-4 border border-[#D4AF37]/30 flex gap-3">
-        <AlertCircle className="w-4 h-4 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+        <AlertCircle className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
         <p className="text-gray-300 text-xs leading-relaxed">
           Limites de jogo responsável entram em vigor imediatamente. Reduções são aplicadas na hora; aumentos entram em vigor após 7 dias.
         </p>
@@ -557,7 +557,7 @@ function Seguranca() {
                 <p className="text-gray-300 text-xs">{l.date}</p>
                 <p className="text-gray-500 text-[11px]">{l.device} · {l.ip}</p>
               </div>
-              <CheckCircle2 className="w-4 h-4 text-[#00C44D] flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-[#00C44D] shrink-0" />
             </div>
           ))}
         </div>
@@ -628,7 +628,7 @@ function ConfirmModal({
                   name="reason"
                   checked={reason === r}
                   onChange={() => setReason(r)}
-                  className="w-4 h-4 accent-[#00C44D] flex-shrink-0"
+                  className="w-4 h-4 accent-[#00C44D] shrink-0"
                 />
                 <span className="text-gray-300 text-sm group-hover:text-white transition-colors">{r}</span>
               </label>
@@ -707,7 +707,7 @@ function PausasSuspensoes({ onBack }: { onBack?: () => void }) {
           <div className="lg:col-span-2 space-y-5">
             {activeConfirmed && (
               <div className="rounded-xl p-4 border border-[#00C44D]/30 flex items-start gap-3 bg-[#00C44D15]">
-                <CheckCircle2 className="w-4 h-4 text-[#00C44D] flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-[#00C44D] shrink-0 mt-0.5" />
                 <p className="text-gray-200 text-xs leading-relaxed">
                   {tab === 'pausa' ? 'Sua conta está pausada — ' : 'Sua conta está suspensa — '}
                   <strong className="text-white">{activeConfirmed}</strong>.
@@ -855,7 +855,7 @@ function ImpostoRenda({ onBack }: { onBack?: () => void }) {
           <button
             onClick={handleDownload}
             disabled={downloading}
-            className="px-8 py-3.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-60 flex items-center justify-center gap-2 flex-shrink-0 bg-[#00C44D]"
+            className="px-8 py-3.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-60 flex items-center justify-center gap-2 shrink-0 bg-[#00C44D]"
           >
             {downloading ? 'Gerando...' : (<><Download className="w-4 h-4" /> Baixar PDF</>)}
           </button>
@@ -983,7 +983,7 @@ export function MyAccountPage({ onGoHome, onNavigateStatic, initialSection, onOp
             </div>
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xl font-bold flex-shrink-0">
+                <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xl font-bold shrink-0">
                   GA
                 </div>
                 <div>
@@ -993,7 +993,7 @@ export function MyAccountPage({ onGoHome, onNavigateStatic, initialSection, onOp
               </div>
               <button
                 onClick={onGoHome}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium text-red-400 hover:text-red-300 hover:bg-white/5 border border-red-500/20 transition-colors flex-shrink-0"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium text-red-400 hover:text-red-300 hover:bg-white/5 border border-red-500/20 transition-colors shrink-0"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Sair</span>

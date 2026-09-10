@@ -25,7 +25,7 @@ export function ChatSidebar() {
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((msg, index) => (
           <div key={index} className="flex gap-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0 text-sm">
+            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shrink-0 text-sm">
               {msg.avatar}
             </div>
             <div className="flex-1 min-w-0">
@@ -35,7 +35,7 @@ export function ChatSidebar() {
               </div>
               <p className="text-gray-300 text-sm break-words">{msg.message}</p>
             </div>
-            <button className="text-gray-500 hover:text-gray-300 flex-shrink-0">
+            <button className="text-gray-500 hover:text-gray-300 shrink-0">
               <MoreHorizontal className="w-4 h-4" />
             </button>
           </div>

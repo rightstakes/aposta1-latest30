@@ -58,7 +58,7 @@ export function TopGamesRow({ title, games }: TopGamesRowProps) {
         {games.map((game, index) => (
           <button
             key={index}
-            className="rounded-lg overflow-hidden group hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30 transition-all flex-shrink-0 w-[30vw] sm:w-[calc(14.28%-10.3px)] sm:min-w-[140px]"
+            className="rounded-lg overflow-hidden group hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30 transition-all shrink-0 w-[30vw] sm:w-[calc(14.28%-10.3px)] sm:min-w-[140px]"
           >
             <div className="aspect-[3/4] relative overflow-hidden rounded-lg">
               <img

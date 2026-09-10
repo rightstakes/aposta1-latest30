@@ -123,7 +123,7 @@ export function NotificationsPage({ onNavigateStatic }: Props) {
                     }`}
                   >
                     <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 dyn-bg dyn-border-full"
+                      className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 dyn-bg dyn-border-full"
                       style={{ '--dyn-bg': `${COLORS[n.type]}1A`, '--dyn-border-full': `1px solid ${COLORS[n.type]}4D` } as React.CSSProperties}
                     >
                       <Icon className="w-[18px] h-[18px] dyn-text" style={{ '--dyn-text': COLORS[n.type] } as React.CSSProperties} />
@@ -131,11 +131,11 @@ export function NotificationsPage({ onNavigateStatic }: Props) {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2 mb-1">
                         <p className="text-white text-sm font-semibold">{n.title}</p>
-                        <span className="text-gray-500 text-xs flex-shrink-0">{n.time}</span>
+                        <span className="text-gray-500 text-xs shrink-0">{n.time}</span>
                       </div>
                       <p className="text-gray-400 text-sm leading-relaxed">{n.description}</p>
                     </div>
-                    {!n.read && <span className="w-2 h-2 rounded-full bg-[#D4AF37] flex-shrink-0 mt-1.5" />}
+                    {!n.read && <span className="w-2 h-2 rounded-full bg-[#D4AF37] shrink-0 mt-1.5" />}
                   </button>
                 );
               })}

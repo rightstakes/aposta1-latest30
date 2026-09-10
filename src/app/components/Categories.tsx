@@ -34,7 +34,7 @@ export function Categories() {
           {categories.map((category, index) => (
             <button
               key={index}
-              className="group flex-shrink-0 w-16 lg:w-[72px] flex flex-col items-center gap-1.5 text-center transition-colors"
+              className="group shrink-0 w-16 lg:w-[72px] flex flex-col items-center gap-1.5 text-center transition-colors"
             >
               <span className="w-16 h-16 lg:w-[72px] lg:h-[72px] rounded-full overflow-hidden border border-[#6335C9]">
                 <img src={category.img} alt={category.label} className="w-full h-full object-cover" />

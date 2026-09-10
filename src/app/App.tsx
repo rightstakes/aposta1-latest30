@@ -219,8 +219,14 @@ export default function App() {
           className="hidden lg:block fixed pointer-events-none z-[55] top-[82px] left-[128px] w-5 h-5 corner-notch"
         />
 
+        {/* No overflow-y-auto here: main has no fixed height (the body scrolls),
+            so it only ever turned main into a scroll container — which also made
+            overflow-x compute to `auto` (CSS forces `visible` -> `auto` when the
+            other axis isn't visible), letting focused tabs drag the whole page
+            sideways, and broke `position: sticky` for child tab bars.
+            overflow-x-clip keeps any stray width from scrolling the page. */}
         <main
-          className="page-glow-bg lg:ml-32 overflow-y-auto min-h-screen transition-all duration-300 pb-24 lg:pb-0"
+          className="page-glow-bg lg:ml-32 overflow-x-clip min-h-screen transition-all duration-300 pb-24 lg:pb-0"
         >
           {activePage === 'notificacoes' ? (
             <NotificationsPage onNavigateStatic={openStaticPage} />

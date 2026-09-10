@@ -56,7 +56,7 @@ export function Footer({ onNavigate }: FooterProps) {
           <div>
             <h4 className="text-white font-bold mb-4">PAGAMENTOS</h4>
             <div className="flex items-center gap-2 mb-4 bg-white/5 p-2 rounded border border-white/15">
-              <div className="w-6 h-4 rounded overflow-hidden flex-shrink-0 flex flex-col">
+              <div className="w-6 h-4 rounded overflow-hidden shrink-0 flex flex-col">
                 <div className="flex-1 bg-[#009c3b]" />
                 <div className="flex-1 bg-[#ffdf00]" />
                 <div className="flex-1 bg-[#009c3b]" />

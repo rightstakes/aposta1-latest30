@@ -41,7 +41,7 @@ function ProfileDropdown({ compact = false, onNavigate }: { compact?: boolean; o
         onClick={() => setOpen(prev => !prev)}
         className="flex items-center gap-1.5 sm:gap-2 bg-white/5 px-1.5 sm:px-3 py-1.5 sm:py-2.5 rounded-xl hover:bg-white/10 border border-white/15 h-full"
       >
-        <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-semibold flex-shrink-0">
+        <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xs sm:text-sm font-semibold shrink-0">
           GA
         </div>
         {!compact && (
@@ -52,7 +52,7 @@ function ProfileDropdown({ compact = false, onNavigate }: { compact?: boolean; o
         )}
         {/* Arrow is dropped on the compact (mobile) dropdown to save width */}
         {!compact && (
-          <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 transition-transform flex-shrink-0 ${open ? 'rotate-180' : ''}`} />
+          <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 transition-transform shrink-0 ${open ? 'rotate-180' : ''}`} />
         )}
       </button>
 
@@ -64,13 +64,13 @@ function ProfileDropdown({ compact = false, onNavigate }: { compact?: boolean; o
               onClick={() => handleItem(item.action)}
               className="w-full flex items-center gap-4 px-5 py-4 text-gray-300 hover:text-white hover:bg-white/5 transition-colors text-sm"
             >
-              <item.icon className="w-5 h-5 text-gray-400 flex-shrink-0" />
+              <item.icon className="w-5 h-5 text-gray-400 shrink-0" />
               <span>{item.label}</span>
             </button>
           ))}
           <div className="h-px bg-white/10 mx-4" />
           <button className="w-full flex items-center gap-4 px-5 py-4 text-red-500 hover:text-red-400 hover:bg-white/5 transition-colors text-sm">
-            <LogOut className="w-5 h-5 flex-shrink-0" />
+            <LogOut className="w-5 h-5 shrink-0" />
             <span>Sair</span>
           </button>
         </div>
@@ -116,8 +116,8 @@ export function Header({ onToggleSidebar, mobileSidebarOpen, onNavigate, onOpenD
 
         {/* Depositar box */}
         <div className="bg-white/5 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2.5 rounded-xl flex items-center gap-1.5 sm:gap-3 border border-white/15">
-          <RefreshCw className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 text-[#D4AF37]" />
-          <div className="flex flex-col gap-0.5 flex-shrink-0">
+          <RefreshCw className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-[#D4AF37]" />
+          <div className="flex flex-col gap-0.5 shrink-0">
             <span className="text-[#D4AF37] text-xs sm:text-sm md:text-base font-semibold leading-none whitespace-nowrap">
               R$ 1,200.00
             </span>
@@ -125,7 +125,7 @@ export function Header({ onToggleSidebar, mobileSidebarOpen, onNavigate, onOpenD
               Bônus: R$3000
             </span>
           </div>
-          <button onClick={onOpenDeposit} className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold flex-shrink-0 whitespace-nowrap">
+          <button onClick={onOpenDeposit} className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold shrink-0 whitespace-nowrap">
             Depositar
           </button>
         </div>

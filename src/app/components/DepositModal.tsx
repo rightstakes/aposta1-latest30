@@ -156,8 +156,8 @@ export function DepositModal({ onClose }: Props) {
                 >
                   <span className="text-gray-300 text-sm truncate font-mono">{FAKE_PIX_KEY}</span>
                   {copied
-                    ? <CheckCheck className="w-4 h-4 text-[#00C44D] flex-shrink-0" />
-                    : <Copy className="w-4 h-4 text-gray-500 group-hover:text-white flex-shrink-0 transition-colors" />}
+                    ? <CheckCheck className="w-4 h-4 text-[#00C44D] shrink-0" />
+                    : <Copy className="w-4 h-4 text-gray-500 group-hover:text-white shrink-0 transition-colors" />}
                 </button>
               </div>
 

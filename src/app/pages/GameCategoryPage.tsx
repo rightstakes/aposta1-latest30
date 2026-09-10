@@ -106,7 +106,7 @@ function GameRow({ title, games }: { title: string; games: Game[] }) {
         {games.map((game, i) => (
           <button
             key={i}
-            className="flex-shrink-0 rounded-xl overflow-hidden group hover:scale-105 transition-all hover:shadow-xl hover:shadow-purple-500/30 w-[30vw] sm:w-40 md:w-44 relative"
+            className="shrink-0 rounded-xl overflow-hidden group hover:scale-105 transition-all hover:shadow-xl hover:shadow-purple-500/30 w-[30vw] sm:w-40 md:w-44 relative"
           >
             <div className="aspect-[3/4] relative overflow-hidden">
               <img
@@ -169,7 +169,7 @@ export function GameCategoryPage({ page, onNavigateStatic }: Props) {
                 key={i}
                 data-nav-id={i}
                 onClick={() => setActiveTab(i)}
-                className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
                   activeTab === i
                     ? 'text-white'
                     : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'

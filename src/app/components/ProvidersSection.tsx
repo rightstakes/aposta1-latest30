@@ -49,7 +49,7 @@ export function ProvidersSection() {
         {providers.map((name) => (
           <div
             key={name}
-            className="flex-shrink-0 w-[180px] h-20 rounded-xl bg-white/5 border border-white/10 hover:border-white/25 hover:bg-white/[0.08] transition-colors flex items-center justify-center px-4"
+            className="shrink-0 w-[180px] h-20 rounded-xl bg-white/5 border border-white/10 hover:border-white/25 hover:bg-white/[0.08] transition-colors flex items-center justify-center px-4"
           >
             <span className="text-gray-300 font-bold text-sm text-center tracking-wide">{name}</span>
           </div>

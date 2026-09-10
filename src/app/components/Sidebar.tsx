@@ -39,7 +39,7 @@ export function Sidebar({ activePage = 'home', onNavigate }: SidebarProps) {
       {/* Logo — fixed at top, clickable to go home. Hidden on mobile. */}
       <button
         onClick={() => onNavigate?.('home')}
-        className="hidden lg:flex flex-col items-center justify-center gap-1 pt-5 px-[15px] flex-shrink-0"
+        className="hidden lg:flex flex-col items-center justify-center gap-1 pt-5 px-[15px] shrink-0"
       >
         <img src={logoImage} alt="Aposta1" className="w-[70%] h-auto object-contain" />
       </button>
@@ -89,7 +89,7 @@ export function Sidebar({ activePage = 'home', onNavigate }: SidebarProps) {
       </div>
 
       {/* Support — fixed at bottom, styled like the old gold deposit card */}
-      <div className="p-[15px] pt-0 flex-shrink-0">
+      <div className="p-[15px] pt-0 shrink-0">
         <div className="rounded-2xl py-4 flex flex-col items-center bg-gradient-to-br from-[#F0C550] to-[#C6902A]">
           <button
             title="Suporte 24/7"
