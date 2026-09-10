@@ -676,7 +676,7 @@ export function RewardsPage({ onNavigateStatic }: Props) {
               const active = tab === t.key;
               return (
                 <button key={t.key} data-tab-id={t.key} onClick={() => setTab(t.key)}
-                  className={`flex items-center gap-1.5 sm:gap-2 px-2 sm:px-5 py-3.5 text-[13px] sm:text-sm font-semibold border-b-2 transition-colors shrink-0 whitespace-nowrap dyn-border ${active ? 'text-white' : 'text-gray-400 hover:text-white border-transparent'}`} style={{ '--dyn-border': active ? '#D4AF37' : 'transparent' } as React.CSSProperties}>
+                  className={`flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 px-2 sm:px-6 py-3.5 text-[13px] sm:text-sm font-semibold border-b-2 transition-colors whitespace-nowrap dyn-border ${active ? 'text-white' : 'text-gray-400 hover:text-white border-transparent'}`} style={{ '--dyn-border': active ? '#D4AF37' : 'transparent' } as React.CSSProperties}>
                   {t.label}
                   {cnt > 0 && (
                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center dyn-bg dyn-text" style={{ '--dyn-bg': active ? '#D4AF37' : '#ffffff18', '--dyn-text': active ? '#000' : '#9ca3af' } as React.CSSProperties}>
