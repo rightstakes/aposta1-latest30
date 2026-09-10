@@ -15,6 +15,10 @@ interface Bonus {
   status: 'active' | 'available' | 'inactive';
   inactiveReason?: string;
   requiresDeposit?: boolean;
+  /** Cashback is real money: no rollover, and no game type — claiming it just
+   *  converts the amount into the real balance. Cards flagged here hide the
+   *  rollover/type meta and use a "claim" CTA instead of "activate". */
+  isCashback?: boolean;
   rules: string[];
 }
 
@@ -113,6 +117,7 @@ const bonuses: Bonus[] = [
     expiry: '5 dias',
     type: 'Cassino',
     status: 'available',
+    isCashback: true,
     rules: [
       'Calculado sobre perdas líquidas de segunda a sexta.',
       'Creditado todo sábado até as 12h.',
@@ -239,13 +244,17 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
             {/* Divider */}
             <div className="h-px bg-white/6" />
 
-            {/* Meta row — evenly spaced */}
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                { icon: Clock, label: 'Expira em', value: bonus.expiry },
-                { icon: Tag,   label: 'Tipo',      value: bonus.type },
-                { icon: Zap,   label: 'Rollover',  value: bonus.rollover },
-              ].map(({ icon: Icon, label, value }) => (
+            {/* Meta row — cashback is cash, so it carries no rollover and no
+                game type; only the expiry is meaningful. */}
+            <div className={`grid gap-2 ${bonus.isCashback ? 'grid-cols-1' : 'grid-cols-3'}`}>
+              {(bonus.isCashback
+                ? [{ icon: Clock, label: 'Expira em', value: bonus.expiry }]
+                : [
+                  { icon: Clock, label: 'Expira em', value: bonus.expiry },
+                  { icon: Tag,   label: 'Tipo',      value: bonus.type },
+                  { icon: Zap,   label: 'Rollover',  value: bonus.rollover },
+                ]
+              ).map(({ icon: Icon, label, value }) => (
                 <div key={label} className="bg-white/8 rounded-xl px-3 py-2.5 flex flex-col gap-1 border border-white/15">
                   <div className="flex items-center gap-1">
                     <Icon className="w-3 h-3 shrink-0 dyn-text" style={{ '--dyn-text': bonus.accentColor } as React.CSSProperties} />
@@ -274,6 +283,13 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
                     DEPOSITE AGORA PARA ATIVAR
                   </button>
                 ) : (
+                  bonus.isCashback ? (
+                    // Cashback isn't "activated" — claiming converts it straight
+                    // into the real balance, so there's nothing to reject either.
+                    <button className="w-full py-2.5 rounded-xl text-xs font-bold text-white hover:opacity-90 flex items-center justify-center gap-1.5 bg-[#00C44D]">
+                      <Gift className="w-3.5 h-3.5" /> Resgatar para saldo real
+                    </button>
+                  ) : (
                   <div className="flex gap-2">
                     <button className="flex-1 py-2.5 rounded-xl text-xs font-bold border border-white/10 text-gray-300 hover:bg-white/5 transition-colors flex items-center justify-center gap-1.5">
                       <XCircle className="w-3.5 h-3.5" /> Rejeitar
@@ -282,6 +298,7 @@ function BonusCard({ bonus }: { bonus: Bonus }) {
                       <Gift className="w-3.5 h-3.5" /> Ativar
                     </button>
                   </div>
+                  )
                 )
               )}
               {bonus.status === 'inactive' && bonus.inactiveReason && (
